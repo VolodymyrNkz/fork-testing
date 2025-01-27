@@ -32,6 +32,7 @@ export const CurrencySelect = () => {
       title={t('common.languages.language')}
       isOpen={isSheetOpen}
       toggle={handleToggle}
+        // @ts-ignore
       triggerComponent={<SelectChip label={CURRENCIES[currency]} Icon={EarthIcon} />}
     >
       <div className={styles.list}>
