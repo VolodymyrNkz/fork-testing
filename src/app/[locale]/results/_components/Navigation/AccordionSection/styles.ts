@@ -1,0 +1,16 @@
+export const styles = {
+  titleWrapper: 'flex items-center mb-xl',
+  title: 'text-h3 ml-xs',
+  accordionContainer: 'flex flex-col gap-lg',
+  categoryWrapper: '',
+  categoryHeader: 'flex cursor-pointer items-center justify-between text-text',
+  arrowIcon: 'transform transition-transform duration-300',
+  arrowOpen: '-rotate-90',
+  arrowClosed: 'rotate-90',
+  categoryContent: 'overflow-hidden transition-all duration-300',
+  contentOpen: 'max-h-[500px]',
+  contentClosed: 'max-h-0',
+  subCategoryList: 'mt-mlg flex flex-col gap-mlg pl-lg',
+  subCategoryItem: 'flex justify-between',
+  activeSubCategory: 'font-bold',
+};

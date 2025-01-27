@@ -1,0 +1,16 @@
+export const styles = {
+  root: 'h-full grid flex-col',
+  wrapper: 'self-center',
+  textContainer: 'px-xl flex flex-col items-center',
+  title: 'text-h2 text-center  my-xl',
+  icon: 'w-[24px] h-[24px]',
+  iconContainer: 'rounded-full flex items-center justify-center w-[56px] h-[56px]',
+  iconContainerConfirmed: 'bg-primary',
+  iconContainerRejected: 'bg-error',
+  subtitle: 'text-center [&:not(:last-child)]:mb-lg mb-xxl font-medium',
+  overviewSection: 'text-text border border-border rounded-md flex flex-col',
+  overviewItem: 'flex items-center  gap-md p-md [&:not(:last-child)]:border-b border-disabled',
+  itemTitle: 'font-bold',
+  itemInfo: 'flex flex-col',
+  productTitle: 'font-bold mb-md',
+};

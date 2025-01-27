@@ -1,0 +1,20 @@
+export const styles = {
+  inputContainer:
+    'relative flex h-[56px] bg-white items-center gap-sm px-sm py-mlg border border-borderBlack rounded-md w-full',
+  input: 'outline-none text-button font-medium placeholder-textSecondary',
+  inputFocused: 'border-2 border-black',
+  invalid: 'border-error',
+  clearButton: 'absolute right-sm',
+  wrapper: 'flex w-full flex-col relative',
+  readOnly: 'text-textSecondary',
+  full: 'w-full',
+  icon: 'min-w-[24px] h-[24px] text-textPrimary',
+  requiredStar: 'text-error ml-xxs',
+  placeholderWrapper: 'flex items-center',
+  placeholderFocused: 'relative text-light',
+  placeholder: 'absolute font-medium text-textSecondary truncate w-full',
+  asterisk: 'text-error',
+  helperText: 'text-light font-normal flex gap-xxs mt-xs',
+  warning: 'text-warning',
+  warnIcon: 'min-w-[16px] h-[16px] transform rotate-180',
+};

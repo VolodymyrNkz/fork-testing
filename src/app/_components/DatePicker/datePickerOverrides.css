@@ -1,0 +1,65 @@
+.react-calendar__month-view__days {
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+    display: flex;
+    justify-content: center;
+    color: var(--color-text-primary);
+    font-size: 18px;
+    font-weight: 300;
+    text-transform: uppercase;
+    border: none;
+    margin-bottom: var(--spacing-mlg);
+}
+
+.react-calendar__month-view__weekdays__weekday abbr {
+    text-decoration: none;
+}
+
+.react-calendar__tile {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border-radius: var(--radius-md);
+    background: transparent;
+    border: 1px solid var(--color-border-secondary);
+    transition: all 0.3s ease;
+    color: var(--color-text-primary);
+    height: 45px;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: var(--spacing-xxs);
+}
+
+.react-calendar__tile--in-range {
+    background: var(--color-secondary);
+}
+
+.react-calendar__tile--first-date {
+    background: var(--color-secondary);
+    border: 1px solid var(--color-primary);
+    font-weight: bold;
+}
+
+.react-calendar__tile--last-date {
+    background: var(--color-secondary);
+    border: 1px solid var(--color-primary);
+    font-weight: bold;
+}
+
+.react-calendar__tile--disabled,
+.react-calendar__tile--past {
+    background: var(--color-disabled);
+    border: none;
+    color: var(--color-text-disabled);
+    pointer-events: none;
+    cursor: not-allowed;
+    text-decoration: line-through;
+}

@@ -1,0 +1,15 @@
+export const styles = {
+  title: 'text-h2 mb-md',
+  container: 'border border-disabled rounded-md',
+  item: 'text-text [&:not(:last-child)]:border-b border-disabled p-md flex items-center gap-md [&>svg]:h-[24px] [&>svg]:w-[24px]',
+  itemInfo: 'flex flex-col',
+  itemTitle: 'text-text font-bold',
+  personInfo: '',
+  productImage: 'rounded-md object-cover h-[110px]',
+  productTitle: 'text-text font-bold self-start',
+  iconActive: 'text-primary',
+  iconDisabled: 'text-textSecondary',
+  button: 'mt-xs flex items-center gap-xs font-[600] text-text',
+  arrowIcon: 'w-[12px] h-[12px]',
+  icon: 'text-textSecondary',
+};

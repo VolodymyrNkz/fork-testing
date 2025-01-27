@@ -1,0 +1,20 @@
+export const styles = {
+  root: 'p-md overflow-hidden rounded-lg border border-disabled',
+  rootWithoutBorder: '',
+  accordionWrapper: 'relative overflow-hidden transition-all duration-300',
+  opened: 'max-h-full',
+  content: 'overflow-hidden text-button font-[400] flex items-start gap-sm',
+  truncated: 'line-clamp-4 overflow-hidden',
+  button:
+    'text-button p-md rounded-md flex items-center justify-center gap-md border border-[#7E8E9A]',
+  icon: 'transform rotate-90',
+  iconActive: 'transform -rotate-90',
+  buttonSection: 'mt-md pt-md border-t border-disabled',
+  index: 'text-muted font-bold mr-sm',
+  dotWrapper: 'relative flex flex-col items-center',
+  dot: 'text-text font-bold flex items-center justify-center bg-textPrimary rounded-full text-white relative z-10',
+  dotPassBy: 'min-w-[12px] h-[12px]',
+  dotStop: 'min-w-[32px] h-[32px]',
+  line: 'absolute top-0 left-[50%] w-[2px] h-[100vh] bg-transparent border-l-2 border-textPrimary border-dashed -translate-x-[50%] z-0',
+  contentPassBy: 'ml-[10px]',
+};

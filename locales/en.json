@@ -1,0 +1,450 @@
+{
+  "common": {
+    "person": "Person",
+    "reviews": "{value, plural, one {# review} other {# reviews}}",
+    "andMore": "and more",
+    "stars": "{value, plural, one {# star} other {# stars}}",
+    "freeCancellation": "Free cancellation",
+    "nonRefundable": "Non-refundable",
+    "duration": "Duration",
+    "rating": "Rating",
+    "sortBy": "Sort by",
+    "specials": "Specials",
+    "date": "Date",
+    "up": "& up",
+    "of": "{first} of {second}",
+    "or": "or",
+    "ofOne": "of {value}",
+    "provider": "Provider",
+    "from": "From",
+    "approx": "(approx.)",
+    "perPerson": "per person",
+    "perGroup": "per group",
+    "minimum": "Minimum",
+    "maximum": "Maximum",
+    "age": "Age",
+    "photos": "Photos",
+    "passBy": "Pass by",
+    "price": "Price",
+    "stops": "{count, plural, one {# stop} other {# stops}}",
+    "searchResult": "Search result",
+    "time": {
+      "daysAndHours": "{days, plural, one {# day} other {# days}}{hours, select, undefined {} other { and {hours, plural, one {# hour} other {# hours}}}}",
+      "hoursOnly": "{hours, plural, one {# hour} other {# hours}}",
+      "minutesOnly": "{minutes, plural, one {# minute} other {# minutes}}",
+      "hoursAndMinutes": "{hours, plural, one {# hour} other {# hours}} and {minutes, plural, one {# minute} other {# minutes}}"
+    },
+    "passengerType": {
+      "adult": "{count, plural, one {Adult} other {Adults}}",
+      "senior": "{count, plural, one {Senior} other {Seniors}}",
+      "youth": "{count, plural, one {Youth} other {Youths}}",
+      "child": "{count, plural, one {Child} other {Children}}",
+      "infant": "{count, plural, one {Infant} other {Infants}}",
+      "traveler": "{count, plural, one {Traveler} other {Travelers}}"
+    },
+    "languages": {
+      "language": "Language",
+      "en": "English",
+      "it": "Italian",
+      "es": "Spanish",
+      "fr": "French"
+    },
+    "languageGuides": {
+      "cmn": "Mandarin",
+      "es": "Spanish",
+      "en": "English",
+      "hi": "Hindi",
+      "ar": "Arabic",
+      "pt": "Portuguese",
+      "bn": "Bengali",
+      "ru": "Russian",
+      "ja": "Japanese",
+      "pa": "Panjabi",
+      "de": "German",
+      "jv": "Javanese",
+      "wuu": "Wu Chinese",
+      "ms": "Malay",
+      "te": "Telugu",
+      "vi": "Vietnamese",
+      "ko": "Korean",
+      "fr": "French",
+      "mr": "Marathi",
+      "ta": "Tamil",
+      "ur": "Urdu",
+      "tr": "Turkish",
+      "it": "Italian",
+      "yue": "Cantonese",
+      "th": "Thai",
+      "gu": "Gujarati",
+      "mnp": "Chinese Min Bei",
+      "fa": "Farsi",
+      "pl": "Polish",
+      "ps": "Pushto",
+      "hsn": "Hunanese",
+      "ml": "Malayalam",
+      "my": "Burmese",
+      "hak": "Hakka Chinese",
+      "uk": "Ukrainian",
+      "fil": "Filipino",
+      "ro": "Romanian",
+      "nl": "Dutch",
+      "ku": "Kurdish",
+      "hr": "Croatian",
+      "hu": "Hungarian",
+      "el": "Greek",
+      "cs": "Czech",
+      "sv": "Swedish",
+      "fi": "Finnish",
+      "sk": "Slovak",
+      "sr": "Serbian",
+      "no": "Norwegian",
+      "he": "Hebrew",
+      "da": "Danish",
+      "zh-TW": "Chinese Traditional",
+      "zh-CN": "Chinese Simplified",
+      "zh_TW": "Chinese Traditional",
+      "zh_CN": "Chinese Simplified",
+      "id": "Indonesian",
+      "GUIDE": "Guide",
+      "WRITTEN": "Written",
+      "Audio": "Audio"
+    }
+  },
+  "searchPlaces": {
+    "paris": {
+      "title": "Paris",
+      "subtitle": "France"
+    },
+    "lisbon": {
+      "title": "Lisbon",
+      "subtitle": "Portugal"
+    },
+    "barcelona": {
+      "title": "Barcelona",
+      "subtitle": "Spain"
+    },
+    "rome": {
+      "title": "Rome",
+      "subtitle": "Italy"
+    },
+    "madrid": {
+      "title": "Madrid",
+      "subtitle": "Spain"
+    },
+    "florence": {
+      "title": "Florence",
+      "subtitle": "Italy"
+    },
+    "london": {
+      "title": "London",
+      "subtitle": "UK"
+    },
+    "vienna": {
+      "title": "Vienna",
+      "subtitle": "Austria"
+    },
+    "porto": {
+      "title": "Porto",
+      "subtitle": "Portugal"
+    },
+    "amsterdam": {
+      "title": "Amsterdam",
+      "subtitle": "Netherlands"
+    },
+    "brussels": {
+      "title": "Brussels",
+      "subtitle": "Belgium"
+    }
+  },
+  "landingPage": {
+    "bookAnExperience": "Book an unforgettable experience",
+    "discover": "Discover cooking classes, curated tastings,",
+    "topExperiencesIn": "Top experiences in {value}",
+    "bestDeals": "Best deals",
+    "mostPopular": "Most popular",
+    "discoverAll": "Discover all experiences",
+    "categories": {
+      "dining": "Dining Experiences",
+      "wineBeerSpirits": "Wine, Beer & Spirits",
+      "foodTours": "Food Tours",
+      "foodClasses": "Food & Drink Classes",
+      "desserts": "Desserts & Sweets",
+      "coffee": "Coffee & Tea"
+    }
+  },
+  "productPage": {
+    "providerPhotos": "Provider photos",
+    "guestsPhotos": "Guests photos",
+    "guests": "Guests",
+    "perGroup": "per group (up to {maxTravelersPerBooking})",
+    "upToTravelers": "You can select up to {maxTravelersPerBooking} travelers in total.",
+    "pickup": "Pickup",
+    "offered": "Offered",
+    "ticket": "Ticket",
+    "mobile": "Mobile",
+    "paper": "Paper",
+    "languages": "Languages",
+    "overview": "Overview",
+    "whatIncluded": "What's Included",
+    "additionalInfo": "Additional Info",
+    "travelerPhotos": "Traveler Photos",
+    "reviews": "Reviews",
+    "whatToExpect": "What to expect",
+    "admissionTicketIncluded": "Admission Ticket Included",
+    "admissionTicketFree": "Admission Ticket Free",
+    "meetingPoint": "Meeting point",
+    "pickupPoint": "Pickup points",
+    "pickupDetails": "Pickup details",
+    "endPoint": "End point",
+    "ticketPoint": "Ticket Redemption Points",
+    "meetingAndPickup": "Meeting and Pickup",
+    "activityEnds": "This activity ends back at the meeting point.",
+    "totalReviews": "Total review count and overall rating based on Viator and Tripadvisor reviews",
+    "meetingPointDefaultName": "Meeting point",
+    "pickupPointDefaultName": "Pickup point",
+    "endPointDefaultName": "End point",
+    "ticketPointDefaultName": "Ticket Redemption Point"
+  },
+  "filterPanel": {
+    "categories": "Categories",
+    "filters": "Filters",
+    "all": "All ({count})",
+    "byProvider": "By provider ({count})",
+    "byGuests": "By guests ({count})",
+    "specials": {
+      "deals": "Deals & Discounts",
+      "free": "Free Cancellation",
+      "sellOut": "Likely to sell out"
+    },
+    "rating": {
+      "five": "Five",
+      "fourAndMore": "Four and more",
+      "ThreeAndMore": "Three and more"
+    },
+    "sorting": {
+      "featured": "Featured",
+      "rating": "Traveler Rating",
+      "priceAsc": "Price (Low to High)",
+      "priceDesc": "Price (High to Low)",
+      "durationAsc": "Duration (Short to Long)",
+      "durationDesc": "Duration (Long to Short)"
+    },
+    "duration": {
+      "upToOneHour": "Up to 1 hour",
+      "oneToFourHours": "1 to 4 hours",
+      "fourHoursToOneDay": "4 hours to 1 day",
+      "oneToThreeDays": "1 to 3 days",
+      "threePlusDays": "3+ days"
+    }
+  },
+  "results": {
+    "totalExperiences": "{count} experiences"
+  },
+  "checkout": {
+    "aboutOperator": "Details about the <b>experience operator</b>",
+    "contactDetails": "Contact details",
+    "activityDetails": "Activity details",
+    "paymentDetails": "Payment details",
+    "informationUse": "We'll use this information to send you confirmation and updates about your booking",
+    "contact": "Contact",
+    "activity": "Activity",
+    "payment": "Payment",
+    "persons": "Persons",
+    "dateAndTime": "Date and Time",
+    "orderSummary": "Order summary",
+    "totalPrice": "Total price",
+    "totalCost": "Total cost",
+    "travelerHeight": "Traveler height",
+    "travelerWeight": "Traveler weight",
+    "priceBreakdown": "Price breakdown",
+    "pickupPoint": "Pickup point",
+    "ownWay": " You can make your own way to the meeting point or request pickup. If you're not sure, you can decide later.",
+    "toBePickedUp": "I'd like to be picked up",
+    "makeOwnWay": "I'll make my own way to the meeting point",
+    "decideLater": "I'll decide later",
+    "departureDetails": "Departure details",
+    "provideDepartureDetails": "You can provide your departure details if you have it scheduled for tour day.",
+    "myDepartureInfo": "My departure info",
+    "toBePickedUpFrom": "Where would you like to be picked up from?",
+    "doesntApplyToMe": "Doesn't apply to me",
+    "tourLanguage": "Tour language",
+    "specialRequirements": "Special requirements",
+    "selectTourLanguage": "Select tour language",
+    "seeOnGoogle": "View on Google maps",
+    "pickupPointIndex": "Pickup point {index}",
+    "meetingPointIndex": "Meeting point {index}",
+    "payWith": "Pay with",
+    "creditCard": "Debit/Credit Card",
+    "country": "Country",
+    "zipCode": "ZIP Code",
+    "departureArrivals": {
+      "AIR": "Airport",
+      "SEA": "Port",
+      "RAIL": "Train",
+      "OTHER": "Other"
+    },
+    "questionPlaceholders": {
+      "TRANSFER_AIR_DEPARTURE_AIRLINE": "Departure airline",
+      "TRANSFER_DEPARTURE_PICKUP": "Pickup",
+      "TRANSFER_RAIL_DEPARTURE_LINE": "Departure rail line",
+      "TRANSFER_RAIL_DEPARTURE_STATION": "Departure rail station",
+      "TRANSFER_PORT_CRUISE_SHIP": "Cruise ship",
+      "SPECIAL_REQUIREMENTS": "e.g dietary needs, accessibility"
+    },
+    "emailWarning": "We'll use this email to send you confirmation and updates about your booking",
+    "agreementText": "By clicking 'Book Now', you agree to Viator’s <terms>Customer Terms of Use</terms> and <privacy>Privacy Statement</privacy>, and you also agree to enter into a direct contract with the supplier of the experience as described on the <listing>listing page.</listing>",
+    "bookingConfirmation": {
+      "confirmed": "Your booking is <br></br> confirmed",
+      "rejected": "We couldn't complete your booking",
+      "confirmedSubtitle": "You'll receive a confirmation email shortly from our service partner, <b>Viator</b>",
+      "rejectionReasons": {
+        "BOOKABLE_ITEM_IS_NO_LONGER_AVAILABLE": "<div>We’re sorry, <b>this experience isn’t available anymore.</b></div><div>Find something else to enjoy by exploring other available experiences.</div>",
+        "WEATHER": "<div>We’re sorry, <b>this experience isn’t available right now due to weather conditions.</b></div><div>Please check back later or explore other options.</div>",
+        "DUPLICATE_BOOKING": "<div><b>It looks like you’ve already booked this experience.</b></div><div>Please check your email for your booking confirmation or explore other options to find something new.</div>",
+        "PRODUCT_NO_LONGER_OPERATING": "<div>We’re sorry, <b>this experience is no longer operating.</b></div><div>Find something else to enjoy by exploring other available experiences.</div>",
+        "MINIMUM_NUMBER_OF_PASSENGERS_NOT_MET": "<div><b>This experience requires more participants in order to book.</b></div><div>Please add more people to complete your booking or explore other experiences.</div>",
+        "SIGNIFICANT_GLOBAL_EVENT_FORCE_MAJEURE": "<div><b>This experience isn’t available due to unexpected events.</b></div><div>Please check back later or explore other options.</div>",
+        "TOUR_WAS_CANCELLED": "<div>We’re sorry, <b>but this experience has been cancelled.</b></div><div>Explore other experiences to find something else to enjoy.</div>",
+        "ISSUE_WITH_TICKET": "<div>There was an issue generating your ticket.</div><div><b>Please try going through the checkout process again</b> to book your experience.</div>",
+        "ISSUE_WITH_PICKUP": "<div>There’s an issue with the pickup location you selected. </div><div><b>Please choose a different pickup point</b> to complete your booking.</div>",
+        "ISSUE_WITH_PAYMENT": "<div><b>There was an issue processing your payment,<b/> and we weren’t able to confirm your booking.</div><div>Please check your payment details and try again.</div>",
+        "INSUFFICIENT_FUNDS": "<div>Your payment was declined due to insufficient funds.</div><div>Please use a different payment method.</div>",
+        "INVALID_PAYMENT_DETAILS": "<div>Your payment was declined due to invalid payment details.</div><div>Please review your payment details.</div>",
+        "SUSPECTED_FRAUD": "<div>Your payment was flagged as potentially fraudulent.</div><div>Please use a different payment method.</div>",
+        "SOFT_DECLINE": "<div>Your payment was declined due to some issues.</div><div>Please review your payment details.</div>",
+        "HARD_DECLINE": "<div>Your payment was declined due to a permanent payment failure.</div><div>Please use a different debit/credit card</div>",
+        "THREE_D_SECURE_REQUIRED": "<div>Your payment was declined due to unsuccessful 3DS authentication.</div><div>Please try again.</div>",
+        "INTERNAL_ERROR": "<div>Your payment was declined due to an internal error.</div><div>Please try again later.</div>",
+        "PROCESSOR_UNAVAILABLE": "<div>Your payment was declined due to some issues.</div><div>Please review your payment details.</div>",
+        "PROCESSOR_ISSUE_WITH_PAYMENT": "<div>Your payment was declined due to some issues.</div><div>Please review your payment details.</div>",
+        "TRANSACTION_NOT_ALLOWED": "<div>Your bank declined the transaction.</div><div>Please use a different debit/credit card</div>",
+        "CARD_INACTIVE": "<div>Your card is inactive.</div><div>Please use a different debit/credit card</div>",
+        "CARD_RESTRICTED": "<div>Restrictions have been placed on your card.</div><div>Please use a different debit/credit card</div>",
+        "OTHER": "<div>Something went wrong, and we couldn’t confirm your booking. </div><div>Don’t worry, <b>your payment wasn’t processed.</b> Explore other experiences or try again later.</div>"
+      }
+    }
+  },
+  "introduction": {
+    "title": "Your next food adventure starts here",
+    "subtitleOne": "Find the perfect experience near you",
+    "textOne": "From hands-on cooking classes to immersive wine tastings, search by location to discover unforgettable culinary adventures. Whether you’re exploring your hometown or traveling abroad, there’s something delicious waiting for you.",
+    "subtitleTwo": "Effortless booking with trusted support",
+    "textTwo": "We’ve partnered with our sister company, Viator, to bring you exceptional food experiences. Book through TheFork, and Viator will take care of the confirmation and details, so you can focus on what matters—enjoying your next adventure"
+  },
+  "cancellationPolicy": {
+    "title": "Cancellation Policy",
+    "standard": {
+      "summary": "You can cancel up to 24 hours in advance of the experience for a full refund.",
+      "list": "<li>For a full refund, you must cancel at least 24 hours before the experience’s start time. </li> <li> If you cancel less than 24 hours before the experience’s start time, the amount you paid will not be refunded. </li> <li> Any changes made less than 24 hours before the experience’s start time will not be accepted. </li><li>Cut-off times are based on the experience’s local time.</li>"
+    },
+    "custom": {
+      "summary": "You can cancel up to {count, plural, one {# day} other {# days}} in advance of the experience for a full refund.",
+      "fullRefund": "For a full refund, you must cancel at least {count, plural, one {# full day} other {# full days}} before the experience’s start time.",
+      "partialRefund": "For a {percent}% refund, you must cancel {from}–{to} full days before the experience’s start time.",
+      "noRefundFirst": "If you cancel less than {count, plural, one {# full day} other {# full days}} before the experience’s start time, the amount you paid will not be refunded.",
+      "noRefundSecond": "Any changes made less than {count, plural, one {# full day} other {# full days}} before the experience’s start time will not be accepted.",
+      "cutOff": "Cut-off times are based on the experience’s local time."
+    },
+    "salesFinal": "This experience is non-refundable and cannot be changed for any reason. If you cancel or ask for an amendment, the amount you paid will not be refunded.",
+    "badWeather": "This experience requires good weather. If it’s canceled due to poor weather, you’ll be offered a different date or a full refund.",
+    "insufficientTravelers": " This experience requires a minimum number of travelers. If it’s canceled because the minimum isn’t met, you’ll be offered a different date/experience or a full refund.",
+    "upToDayHours": "Up to 24 hours before the experience starts (local time)",
+    "upToDaysInAdvance": "Up to {count, plural, one {# day} other {# days}} in advance",
+    "noRefund": "You will not receive a refund if you cancel.",
+    "fullRefundText": "Before {time} on {date} (local time).",
+    "cancelUntil": "Cancel until {date} (local time) for a partial refund.",
+    "bookWithConfidence": "Book with Confidence"
+  },
+  "tourOperator": {
+    "tradingName": "Trading name",
+    "operatorName": "Operator name",
+    "registeredIn": "Registered in",
+    "information": "Tour operator information",
+    "legal": "This operator has self-certified that they are committed to only offer services that comply with applicable laws, including EU law. <br></br> For your protection, make sure you use Viator's platform to communicate with operators and pay for bookings.",
+    "business": "This supplier is a trader on the Viator marketplace. Viator is an online intermediation platform that allows consumers to buy experiences from third-party providers. For your protection, make sure you use Viator's platform to communicate with operators and pay for bookings.",
+    "individual": "This experience is operated by a private individual and not a business. This means that you may not be protected under the same consumer protection rules under EU and UK law if you book this experience. However, Viator will provide you with the same customer service as with any other booking. <br></br> <br></br> Viator is an online intermediation platform that allows consumers to buy experiences from third-party providers."
+  },
+  "modals": {
+    "sessionExpired": "Your session expired",
+    "availabilityChanged": "Availability changed",
+    "sessionExpiredText": "<div>It looks like you’ve been away for a bit. </div> <div> Just click the button below <br></br> to continue booking</div>",
+    "availabilityChangedText": "<div>Unfortunately, this product is no longer available for your selected dates.</div> <div>Please, check other available options.</div>",
+    "somethingWentWrong": "Something went wrong",
+    "somethingWentWrongText": "<div>Something went wrong and we couldn't load this content.</div> <div>Please reload and try again</div>",
+    "notBookable": "Experience <br></br> is not supported",
+    "notBookableText": "<div>We’re very sorry, but this experience isn’t supported by TheFork.</div> <br></br> <div>Find something else to enjoy by exploring other available experiences.</div>"
+  },
+  "inputs": {
+    "placeOrActivity": "Place or activity",
+    "searchResult": "Search result",
+    "searchFor": "Search for",
+    "searchForAPlace": "Search for a place or activity",
+    "nearMe": "Near {value}",
+    "selectDates": "Select Dates",
+    "selectDate": "Select Date",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "phone": "Phone number",
+    "suggestions": "Suggestions",
+    "searchPickupPoints": "Search pickup points",
+    "noResults": "No results found",
+    "typeToSearch": "Type to search"
+  },
+  "buttons": {
+    "experienceDetails": "Experience Details",
+    "bookNow": "Book now",
+    "next": "Next",
+    "reset": "Reset",
+    "continueToCheckout": "Continue to checkout",
+    "continueCheckout": "Continue checkout",
+    "apply": "Apply",
+    "search": "Search",
+    "seeLess": "See less",
+    "seeMore": "See more",
+    "readLess": "Read less",
+    "readMore": "Read more",
+    "learnMore": "Learn more",
+    "changeDate": "Change date",
+    "reload": "Reload",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "clear": "Clear",
+    "seeAll": "See all",
+    "seeMoreReviews": "See more reviews ({reviews})",
+    "checkAvailability": "Check availability",
+    "updateSearch": "Update search",
+    "seeExperiences": "See {count, plural, one {# experience} other {# experiences}}",
+    "seeSteps": "See {count, plural, one {# more step} other {# more steps}}",
+    "seeOtherPhotos": "See other {count, plural, one {# photo} other {# photos}}",
+    "exploreOther": "Explore other experience"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "questionOne": {
+      "question": "Can I use my TheFork account to book an experience?",
+      "answer": "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+    },
+    "questionTwo": {
+      "question": "How long does each experience typically last?",
+      "answer": "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+    },
+    "questionThree": {
+      "question": "How many people can participate in the small group experiences?",
+      "answer": "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+    },
+    "questionFour": {
+      "question": "Can I book an experience if I have an allergy or intolerance?",
+      "answer": "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+    }
+  },
+  "fallbacks": {
+    "noTitle": "No Title",
+    "noFreeCancellation": "No Free cancellation",
+    "unknownDuration": "Unknown duration",
+    "couldNotFind": "We couldn’t find anything matching your request.",
+    "tryResearch": "Try adjusting the <b>filters</b> or <b>searching</b> for something else!",
+    "onePersonRequired": "At least one person is required",
+    "oneAdultRequired": "At least one adult or senior required."
+  }
+}

@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+    tags:
+      - '**'
+  pull_request:
+    branches: [master]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci: 
+    uses: lafourchette/github-actions/.github/workflows/node-ci.yml@v1
+    with:
+      slack-room-id: C01B9R573AN #tf-demand-alerting
