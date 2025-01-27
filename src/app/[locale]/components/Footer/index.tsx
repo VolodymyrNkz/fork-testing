@@ -2,7 +2,6 @@
 import { usePathname } from 'next/navigation';
 import { LanguageSelect } from '@/app/[locale]/components/LanguageSelect';
 import { styles } from '@/app/[locale]/components/Footer/styles';
-import { CurrencySelect } from '@/app/[locale]/components/CurrencySelect';
 
 export const Footer = () => {
   const pathname = usePathname();
@@ -17,7 +16,6 @@ export const Footer = () => {
       }}
     >
       <LanguageSelect />
-      <CurrencySelect />
     </div>
   );
 };

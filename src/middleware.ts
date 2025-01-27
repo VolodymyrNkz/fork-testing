@@ -11,7 +11,7 @@ export default function middleware(request: NextRequest) {
   const response = intlMiddleware(request);
   searchParams.forEach((value, key) => {
     if (key === 'country') {
-      response.cookies.set('currency', getCurrencyByCountry(value));
+      response.cookies.set('currency', getCurrencyByCountry(value), { path: '/' });
     }
     response.cookies.set(key, value, { path: '/' });
   });

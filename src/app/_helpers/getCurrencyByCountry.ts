@@ -1,5 +1,3 @@
-import { DEFAULT_CURRENCY } from '@/app/_constants/common';
-
 const countryToCurrency: Record<string, string> = {
   australia: 'AUD',
   brazil: 'BRL',
@@ -22,5 +20,5 @@ const countryToCurrency: Record<string, string> = {
 };
 
 export const getCurrencyByCountry = (countryCode: string): string => {
-  return countryToCurrency[countryCode.toLowerCase()] || DEFAULT_CURRENCY;
+  return countryToCurrency[countryCode.toLowerCase()] || 'EUR';
 };

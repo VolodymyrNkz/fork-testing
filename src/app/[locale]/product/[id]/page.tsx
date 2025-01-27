@@ -33,7 +33,6 @@ const ProductPage: FC<ProductPageProps> = async ({
 
   const { providerPhotos, bookingNotAvailable } = productDescription;
 
-
   return (
     <ImageViewerProvider providerPhotos={providerPhotos} productCode={productCode}>
       <BookingContextProvider bookingNotAvailable={bookingNotAvailable}>

@@ -76,21 +76,18 @@ const Experiences = () => {
             filtering: {
               destination,
               tags: ['11891', '21911'],
-              flags: ['LIKELY_TO_SELL_OUT'],
             },
             currency,
             pagination: {
               start: 1,
               count: 5,
             },
-            flags: ['LIKELY_TO_SELL_OUT'],
             sorting: {
               sort: 'TRAVELER_RATING',
               order: 'DESCENDING',
             },
           },
           configuration: {
-            flags: ['LIKELY_TO_SELL_OUT'],
             tagId: 11891,
             rating: { from: 4, to: 5 },
           },

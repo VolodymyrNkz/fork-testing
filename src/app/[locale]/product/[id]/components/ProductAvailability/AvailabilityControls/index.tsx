@@ -28,8 +28,6 @@ import { useLocale, useTranslations } from 'next-intl';
 import { ONE_DAY } from '@/app/_constants/common';
 import { useModal } from '@/app/_contexts/modalContext';
 import { useRequest } from '@/app/_hooks/useRequest';
-import { getCurrencyRate } from '@/app/_hooks/useCurrencyRates';
-import { getUserInfo } from '@/app/_helpers/getUserInfo';
 
 export type ProductAvailabilityInfo = BookingRequirements & {
   ageBands?: AgeBand[];
@@ -51,8 +49,6 @@ export const AvailabilityControls: FC<AvailabilityControlsProps> = ({
   const locale = useLocale();
   const createRequest = useRequest();
 
-  const { currency } = getUserInfo();
-
   const [availabilityData, setAvailabilityData] = useState<AvailabilityData | undefined>(undefined);
   const [selectedDate, setSelectedDate] = useState<[Date, Date | null] | null>(null);
   const [wizardStep, setWizardStep] = useState(0);
@@ -64,8 +60,6 @@ export const AvailabilityControls: FC<AvailabilityControlsProps> = ({
     travelDate: null,
     guests: null,
   });
-
-  const lastRequestCurrency = useRef<string>(currency);
 
   const { isVisible, styles: floatingStyles, setTargetRef } = useFloating();
   const {
@@ -148,19 +142,12 @@ export const AvailabilityControls: FC<AvailabilityControlsProps> = ({
     lastRequestState.current = { travelDate, guests };
 
     const bookableItems = await getProductBookableItems(productCode);
-    scrollToTimeslots();
 
     if (bookableItems?.every(({ available }) => !available)) {
       openModal('availabilityChanged', () => handleToggleWizard(0));
       return;
     }
   };
-
-  useEffect(() => {
-    if (showTimeslots && lastRequestCurrency.current !== currency) {
-      getProductBookableItems(productCode);
-    }
-  }, [currency, productCode, showTimeslots]);
 
   function getAvailabilityRanges(data: ProductBookableItemSchedule[]) {
     const daysOfWeekMap: Record<string, number> = {
@@ -238,15 +225,13 @@ export const AvailabilityControls: FC<AvailabilityControlsProps> = ({
 
     return availabilityRanges;
   }
+
   const fetchProductAvailability = async (productCode: string) => {
     const data = await createRequest<ProductAvailabilityResponse>({
       endpoint: `${API_ROUTES.getProductAvailability}/${productCode}`,
       headers: getDefaultHeaders(),
       method: 'GET',
     });
-    console.log('data', data);
-
-    const currencyRate = await getCurrencyRate(data.currency);
 
     const unavailableDates = Array.from(
       new Set(
@@ -269,7 +254,7 @@ export const AvailabilityControls: FC<AvailabilityControlsProps> = ({
     return {
       availabilityRanges: getAvailabilityRanges(data.bookableItems),
       unavailableDates,
-      price: data.summary.fromPrice * currencyRate,
+      price: data.summary.fromPrice,
     };
   };
 
@@ -278,7 +263,7 @@ export const AvailabilityControls: FC<AvailabilityControlsProps> = ({
       const availabilityData = await fetchProductAvailability(productCode);
       setAvailabilityData(availabilityData);
     })();
-  }, [productCode, currency]);
+  }, [productCode]);
 
   useEffect(() => {
     if (filters?.startDate) {
@@ -349,15 +334,11 @@ export const AvailabilityControls: FC<AvailabilityControlsProps> = ({
     setTargetRef(buttonRef.current);
   }, [setTargetRef]);
 
-  // useEffect(() => {
-  //   if (!loading && lastRequestCurrency.current !== currency) {
-  //     scrollToTimeslots();
-  //   }mobitru_ak_HZl5QB0OaTMN7RUuEsGDiB_PBaLubxG6WDcuRXMSIHV0INBSCsUp2vpR1hc8cAYutTenLAJwYX3cDCN7jOy
-  // }, [loading]);
-
   useEffect(() => {
-    lastRequestCurrency.current = currency;
-  }, [currency]);
+    if (!loading) {
+      scrollToTimeslots();
+    }
+  }, [loading]);
 
   return (
     <>
