@@ -3,17 +3,21 @@ import {
   LanguageGuides,
   SingleProductResponse,
 } from '@/app/api/getSingleProduct/[productCode]/types';
-import { getDefaultHeaders } from '@/app/_constants/api';
+import { API_ROUTE_PREFIX, API_ROUTES, getDefaultHeaders } from '@/app/_constants/api';
 import { Guests } from '@/app/_contexts/bookingContext';
 import { AGE_BANDS } from '@/app/const';
 import { Attraction } from '@/app/api/types';
 import { getCookie } from '@/app/_helpers/getCookie';
+import { ProductAvailabilityResponse } from '@/app/api/getProductAvailability/[productCode]/types';
+import { getCurrencyRates } from '@/app/_hooks/useCurrencyRates';
+import { getUserInfo } from '@/app/_helpers/getUserInfo';
 
 export interface MappedLanguageGuides {
   [key: string]: LanguageGuides[];
 }
 
 const productCache: Record<string, SingleProductResponse> = {};
+const availabilityCache: Record<string, ProductAvailabilityResponse> = {};
 
 export const fetchProductData = async (id: string): Promise<SingleProductResponse> => {
   const locale = getCookie('NEXT_LOCALE');
@@ -46,8 +50,47 @@ export const fetchAttractionData = async (id: number): Promise<Attraction> => {
   return response.json();
 };
 
+export const fetchProductAvailability = async (
+  id: string,
+): Promise<ProductAvailabilityResponse> => {
+  const { currency } = getUserInfo();
+  const productId = `${id}-${currency}`;
+
+  if (availabilityCache[productId]) {
+    return availabilityCache[productId];
+  }
+
+  const url =
+    typeof window === 'undefined'
+      ? `${process.env.VIATOR_API_URL}availability/schedules/${id}`
+      : `${API_ROUTE_PREFIX}${API_ROUTES.getProductAvailability}/${id}`;
+
+  const response = await fetch(url, {
+    headers: getDefaultHeaders(),
+    method: 'GET',
+  });
+
+  const product = (await response.json()) as ProductAvailabilityResponse;
+  const currencyRate = await getCurrencyRates(product.currency);
+
+  const productPrice = product.summary.fromPrice;
+  const productDiscount = product.summary.fromPriceBeforeDiscount || productPrice;
+
+  const productWithCurrencyRates: ProductAvailabilityResponse = {
+    ...product,
+    summary: {
+      fromPrice: product.summary.fromPrice * currencyRate,
+      fromPriceBeforeDiscount: productDiscount * currencyRate,
+    },
+  };
+
+  availabilityCache[productId] = productWithCurrencyRates;
+  return productWithCurrencyRates;
+};
+
 export const getProductDescription = async (id: string) => {
   const product = await fetchProductData(id);
+  const availability = await fetchProductAvailability(id);
 
   const getBestImageVariant = (
     variants: Array<{ width: number; height: number; url: string }>,
@@ -81,6 +124,8 @@ export const getProductDescription = async (id: string) => {
   };
 
   const photoGroups = chunkArray(bestImages, 3);
+  const price = availability.summary.fromPrice;
+  const discount = availability.summary.fromPriceBeforeDiscount;
 
   return {
     photoGroups,
@@ -91,6 +136,8 @@ export const getProductDescription = async (id: string) => {
     providerPhotos: product.images?.map((image) => getBestImageVariant(image.variants, 700)) || [],
     bookingNotAvailable: product.bookingConfirmationSettings?.confirmationType !== 'INSTANT',
     tags: product.tags,
+    price: price,
+    discount: discount,
   };
 };
 

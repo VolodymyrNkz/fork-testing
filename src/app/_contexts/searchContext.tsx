@@ -389,7 +389,7 @@ export const SearchContextProvider = ({ children }: { children: ReactNode }) => 
       getProducts(currentPage, !searchedTextInDestinations);
       setLoadingNewChunk(true);
     }
-  }, [destinations, searchedDestination, sorting, filters]);
+  }, [destinations, searchedDestination, sorting, filters, currency]);
 
   useEffect(() => {
     if (prevDestination.current && prevDestination.current !== searchedDestination)

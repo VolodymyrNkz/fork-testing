@@ -261,6 +261,7 @@ export const BookingContextProvider = ({
   const [productBookLoading, setProductBookLoading] = useState(false);
   const [pickupLocationReference, setPickupLocationReference] = useState<string>('');
   const [shouldCloseCheckout, setShouldCloseCheckout] = useState(false);
+  const [lastHeldCurrency, setLastHeldCurrency] = useState<string | null>(null);
 
   const { openModal } = useModal();
 
@@ -479,6 +480,7 @@ export const BookingContextProvider = ({
     setSessionToken(data.paymentSessionToken);
     setCartRef(data.cartRef);
     setBookingRef(data.items[0].bookingRef);
+    setLastHeldCurrency(data.currency);
 
     const expiresAt = data?.items?.[0]?.bookingHoldInfo?.pricing?.validUntil;
     if (expiresAt) {
@@ -739,6 +741,12 @@ export const BookingContextProvider = ({
       openModal('notBookable');
     }
   }, [bookingNotAvailable, openModal]);
+
+  useEffect(() => {
+    if (!!lastHeldCurrency && !!productBookingData && lastHeldCurrency !== currency) {
+      proceedBooking(productBookingData, true);
+    }
+  }, [productBookingData, lastHeldCurrency, currency]);
 
   return (
     <BookingContext.Provider

@@ -58,11 +58,10 @@ export const InputPlaceSelect: FC<InputPlaceSelectProps> = () => {
 
   const searchValueRef = useRef(searchValue);
 
-  const { city: nearbyCity, country: nearbyCountry, currency: currencyParam } = useLocation();
+  const { city: nearbyCity, country: nearbyCountry } = useLocation();
   const nearbyLocation = [nearbyCity, nearbyCountry].filter(Boolean).join(', ') || 'me';
 
-  const currency =
-    currencyParam || userCurrency || getCurrencyByCountry(nearbyCountry.toLowerCase());
+  const currency = userCurrency || getCurrencyByCountry(nearbyCountry.toLowerCase());
 
   const handleToggle = () => {
     setIsModalOpen((prev) => !prev);
@@ -152,6 +151,7 @@ export const InputPlaceSelect: FC<InputPlaceSelectProps> = () => {
 
   return (
     <BottomSheet
+      fullHeight
       toggle={handleToggle}
       isOpen={isModalOpen}
       title={title}
@@ -193,48 +193,36 @@ export const InputPlaceSelect: FC<InputPlaceSelectProps> = () => {
     >
       <div className={styles.list}>
         {loading ? (
-          Array.from({ length: 3 }).map((_, index) => <Skeleton key={index} height={30} mb={0} />)
+          Array.from({ length: 7 }).map((_, index) => <Skeleton key={index} height={30} mb={0} />)
         ) : results.length ? (
-          results?.map(
-            (
-              { title, type, subtitle, imgUrl, tag, productCode, price, priceWithDiscount },
-              index,
-            ) => {
-              if (type === 'product') {
-                return (
-                  <Link
-                    href={`${NAVIGATION_ROUTES.product}${productCode}?price=${price}${
-                      priceWithDiscount && priceWithDiscount !== price
-                        ? `&discount=${priceWithDiscount}`
-                        : ''
-                    }`}
-                    key={index}
-                  >
-                    <SearchListItem
-                      onClick={() => handleItemSelect(title)}
-                      tag={tag}
-                      imgUrl={imgUrl}
-                      title={title}
-                      type={type}
-                      subtitle={subtitle}
-                    />
-                  </Link>
-                );
-              }
-
+          results?.map(({ title, type, subtitle, imgUrl, tag, productCode }, index) => {
+            if (type === 'product') {
               return (
-                <SearchListItem
-                  onClick={() => handleItemSelect(title)}
-                  tag={tag}
-                  key={index}
-                  imgUrl={imgUrl}
-                  title={title}
-                  type={type}
-                  subtitle={subtitle}
-                />
+                <Link href={`${NAVIGATION_ROUTES.product}${productCode}`} key={index}>
+                  <SearchListItem
+                    onClick={() => handleItemSelect(title)}
+                    tag={tag}
+                    imgUrl={imgUrl}
+                    title={title}
+                    type={type}
+                    subtitle={subtitle}
+                  />
+                </Link>
               );
-            },
-          )
+            }
+
+            return (
+              <SearchListItem
+                onClick={() => handleItemSelect(title)}
+                tag={tag}
+                key={index}
+                imgUrl={imgUrl}
+                title={title}
+                type={type}
+                subtitle={subtitle}
+              />
+            );
+          })
         ) : (
           <>
             <SearchListItem

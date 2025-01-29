@@ -19,6 +19,7 @@ import { NAVIGATION_ROUTES } from '@/app/_constants/navigationRoutes';
 import { GTM_EVENTS } from '@/app/_constants/gtm';
 import { useSearch } from '@/app/_contexts/searchContext';
 import { FILTERS_CATEGORIES_IDS } from '@/app/[locale]/results/_components/Navigation/mock';
+import { formatPrice } from '@/app/_helpers/formatPrice';
 
 interface BookingConfirmationModalProps {
   isOpen: boolean;
@@ -168,10 +169,10 @@ export const BookingConfirmationModal: FC<BookingConfirmationModalProps> = ({
                   <DollarIcon className={styles.icon} />
                   <div className={styles.itemInfo}>
                     <div className={styles.itemTitle}>{t('checkout.totalCost')}</div>
-                    {format.number(Number(productBookingData?.totalPrice) || 0, {
-                      style: 'currency',
+                    {formatPrice({
                       currency,
-                      currencyDisplay: 'narrowSymbol',
+                      price: Number(productBookingData?.totalPrice) || 0,
+                      format,
                     })}
                   </div>
                 </div>

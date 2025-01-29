@@ -8,26 +8,21 @@ import { DollarIcon } from '@/app/_icons/DollarIcon';
 import { Reviews } from '@/app/[locale]/product/[id]/components/ProductDescription/Reviews';
 import { getTranslations, getFormatter } from 'next-intl/server';
 import { getUserInfo } from '@/app/_helpers/getUserInfo';
+import { formatPrice } from '@/app/_helpers/formatPrice';
 
 interface ProductDescriptionProps {
   productCode: string;
-  priceBeforeDiscount?: string;
-  price: string;
 }
 
-export const ProductDescription: FC<ProductDescriptionProps> = async ({
-  productCode,
-  price,
-  priceBeforeDiscount,
-}) => {
+export const ProductDescription: FC<ProductDescriptionProps> = async ({ productCode }) => {
   const t = await getTranslations();
   const format = await getFormatter();
   const { currency } = getUserInfo();
 
-  const { photoGroups, title, averageRating, totalReviews, pricingType } =
+  const { photoGroups, title, averageRating, totalReviews, pricingType, price, discount } =
     await getProductDescription(productCode);
 
-  const withDiscount = !!priceBeforeDiscount && priceBeforeDiscount !== price;
+  const withDiscount = !!discount && discount !== price;
 
   return (
     <div className={styles.root}>
@@ -40,18 +35,18 @@ export const ProductDescription: FC<ProductDescriptionProps> = async ({
         <DollarIcon />
         <span>{t('common.from')}</span>
         <span className={`${styles.price} ${withDiscount ? styles.oldPrice : ''}`}>
-          {format.number(Number(withDiscount ? priceBeforeDiscount : price), {
-            style: 'currency',
+          {formatPrice({
+            price: Number(withDiscount ? discount : price),
             currency,
-            currencyDisplay: 'narrowSymbol',
+            format,
           })}
         </span>
         {withDiscount && (
           <span className={styles.discount}>
-            {format.number(Number(price), {
-              style: 'currency',
+            {formatPrice({
+              price,
               currency,
-              currencyDisplay: 'narrowSymbol',
+              format,
             })}
           </span>
         )}

@@ -1,5 +1,6 @@
 {
   "common": {
+    "currency": "Currency",
     "person": "Person",
     "reviews": "{value, plural, one {# review} other {# reviews}}",
     "andMore": "and more",

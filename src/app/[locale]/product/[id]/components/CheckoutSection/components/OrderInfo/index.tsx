@@ -16,6 +16,7 @@ import { CancellationPolicyPopup } from '@/app/_components/CancellationPolicyPop
 import { FullScreenPanel } from '@/app/_components/FullScreenPanel';
 import { CancellationStatus } from '@/app/[locale]/product/[id]/components/CheckoutSection/components/CheckoutSection';
 import { EmailIcon } from '@/app/_icons/EmailIcon';
+import { formatPrice } from '@/app/_helpers/formatPrice';
 
 interface OrderInfoProps {
   email: string;
@@ -70,14 +71,12 @@ export const OrderInfo: FC<OrderInfoProps> = ({
                   {numberOfTravelers}{' '}
                   {t(`common.passengerType.${ageBand.toLowerCase()}`, { count: numberOfTravelers })}
                   {' x '}
-                  {format.number(
-                    Number(subtotalPrice.price.recommendedRetailPrice / numberOfTravelers) || 0,
-                    {
-                      style: 'currency',
-                      currency,
-                      currencyDisplay: 'narrowSymbol',
-                    },
-                  )}
+                  {formatPrice({
+                    price:
+                      Number(subtotalPrice.price.recommendedRetailPrice / numberOfTravelers) || 0,
+                    currency,
+                    format,
+                  })}
                 </div>
               ))}
           </div>

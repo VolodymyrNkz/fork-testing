@@ -4,6 +4,7 @@ import { styles } from '@/app/_components/Range/styles';
 import { useSearch } from '@/app/_contexts/searchContext';
 import { useFormatter } from 'next-intl';
 import { getUserInfo } from '@/app/_helpers/getUserInfo';
+import { formatPrice } from '@/app/_helpers/formatPrice';
 
 interface RangeProps {
   min?: number;
@@ -61,11 +62,11 @@ export const Range: FC<RangeProps> = ({ min = 0, max = 100, className }) => {
         renderThumb={({ props, index }) => (
           <div {...props} key={index} className={styles.thumb} style={props.style} ref={props.ref}>
             <div className={styles.tooltip}>
-              {format.number(values[index], {
-                style: 'currency',
+              {formatPrice({
                 currency,
+                price: values[index],
+                format: format,
                 maximumFractionDigits: 0,
-                currencyDisplay: 'narrowSymbol',
               })}
             </div>
           </div>

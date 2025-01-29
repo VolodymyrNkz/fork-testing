@@ -10,3 +10,11 @@ export const LANGUAGES = (t: any): Record<string, string> => ({
   it: t('common.languages.it'),
   es: t('common.languages.es'),
 });
+
+export const CURRENCIES = {
+  EUR: '€ • EUR',
+  USD: '$ • USD',
+  GBP: '£ • GBP',
+  CHF: '₣ • CHF',
+  SEK: 'kr • SEK',
+};

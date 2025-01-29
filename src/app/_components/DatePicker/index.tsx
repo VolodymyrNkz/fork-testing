@@ -8,6 +8,7 @@ import { checkIsBooked } from '@/app/_helpers/checkIsDateBooked';
 import { useFormatter, useLocale } from 'next-intl';
 import { getUserInfo } from '@/app/_helpers/getUserInfo';
 import { ONE_DAY } from '@/app/_constants/common';
+import { formatPrice } from '@/app/_helpers/formatPrice';
 
 interface DatePickerProps {
   availabilityData?: AvailabilityData;
@@ -102,11 +103,11 @@ export const DatePicker: FC<DatePickerProps> = ({
 
     return !isAvailable && availabilityData?.price ? (
       <div className={styles.price}>
-        {format.number(Math.round(availabilityData?.price) || 0, {
-          style: 'currency',
+        {formatPrice({
           currency,
+          price: availabilityData?.price,
+          format,
           maximumFractionDigits: 0,
-          currencyDisplay: 'narrowSymbol',
         })}
       </div>
     ) : null;

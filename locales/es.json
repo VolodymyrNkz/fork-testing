@@ -1,5 +1,6 @@
 {
   "common": {
+    "currency": "Moneda",
     "person": "Persona",
     "reviews": "{value, plural, one {# opinión} other {# opiniones}}",
     "andMore": "y más",

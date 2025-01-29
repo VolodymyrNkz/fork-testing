@@ -63,6 +63,10 @@ body {
     color: var(--color-text-secondary);
     font-weight: 400;
   }
+
+  details summary::-webkit-details-marker {
+    display: none;
+  }
 }
 
 .scrollbar-hide {

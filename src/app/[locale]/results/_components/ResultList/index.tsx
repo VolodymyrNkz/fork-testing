@@ -56,9 +56,7 @@ export const ProductList = () => {
               return (
                 <Link
                   key={product.productCode}
-                  href={`${NAVIGATION_ROUTES.product}${product.productCode}?price=${fromPrice}${
-                    priceWithDiscount ? `&discount=${priceWithDiscount}` : ''
-                  }`}
+                  href={`${NAVIGATION_ROUTES.product}${product.productCode}`}
                 >
                   <ExperienceCard
                     full

@@ -9,6 +9,7 @@ import { styles } from './styles';
 import { DollarIcon } from '@/app/_icons/DollarIcon';
 import { useFormatter, useLocale, useTranslations } from 'next-intl';
 import { getUserInfo } from '@/app/_helpers/getUserInfo';
+import { formatPrice } from '@/app/_helpers/formatPrice';
 
 type ExperienceCardProps = Experience & {
   full?: boolean;
@@ -76,29 +77,29 @@ const ExperienceCard: FC<ExperienceCardProps> = ({
                   {isDiscounted ? (
                     <>
                       <div className={styles.originalPrice}>
-                        {format.number(Number(originalPrice) || 0, {
-                          style: 'currency',
+                        {formatPrice({
                           currency,
+                          price: Number(originalPrice) || 0,
+                          format,
                           maximumFractionDigits: 0,
-                          currencyDisplay: 'narrowSymbol',
                         })}
                       </div>
                       <div className={styles.discountPrice}>
-                        {format.number(Number(price) || 0, {
-                          style: 'currency',
+                        {formatPrice({
                           currency,
+                          price: Number(price) || 0,
+                          format,
                           maximumFractionDigits: 0,
-                          currencyDisplay: 'narrowSymbol',
                         })}
                       </div>
                     </>
                   ) : (
                     <div className={styles.price}>
-                      {format.number(Number(price) || 0, {
-                        style: 'currency',
+                      {formatPrice({
                         currency,
+                        price: Number(price) || 0,
+                        format,
                         maximumFractionDigits: 0,
-                        currencyDisplay: 'narrowSymbol',
                       })}
                     </div>
                   )}

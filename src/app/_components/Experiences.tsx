@@ -12,9 +12,11 @@ import Loading from '@/app/[locale]/loading';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { defaultFilters, useSearch } from '../_contexts/searchContext';
+import { getUserInfo } from '@/app/_helpers/getUserInfo';
 
 const Experiences = () => {
-  const { city, currency } = useLocation();
+  const { city } = useLocation();
+  const { currency } = getUserInfo();
   const t = useTranslations();
 
   const { mappedDestinations } = useSearch();
@@ -29,7 +31,7 @@ const Experiences = () => {
           experiencesFilters: {
             filtering: {
               destination,
-              tags: ['21911', '11891'],
+              tags: ['21911'],
             },
             currency,
             pagination: {
@@ -52,7 +54,7 @@ const Experiences = () => {
             filtering: {
               destination,
               tags: ['21911'],
-              rating: { from: 1, to: 5 },
+              rating: { from: 4, to: 5 },
               flags: ['SPECIAL_OFFER'],
             },
             currency,
@@ -61,7 +63,7 @@ const Experiences = () => {
               count: 5,
             },
             sorting: {
-              sort: 'DEFAULT',
+              sort: 'TRAVELER_RATING',
               order: 'DESCENDING',
             },
           },
@@ -82,10 +84,6 @@ const Experiences = () => {
               start: 1,
               count: 5,
             },
-            sorting: {
-              sort: 'TRAVELER_RATING',
-              order: 'DESCENDING',
-            },
           },
           configuration: {
             tagId: 11891,
@@ -101,7 +99,7 @@ const Experiences = () => {
     };
   });
 
-  const { data, loading } = useProducts(city, sections);
+  const { data, loading } = useProducts(city, sections, currency);
 
   if (loading) {
     return <Loading />;
@@ -109,13 +107,20 @@ const Experiences = () => {
 
   return (
     <div className="mx-lg my-11 me-5 space-y-10 overflow-hidden">
-      {data?.map(({ products, title }, index) => {
+      {data?.flatMap(({ products, title }, index) => {
         // TODO: check if API actually sends localized title, may not work with other languages, relying on order is WA
-        if (title === t('landingPage.topExperiencesIn', { value: city }) || index === 0) {
+        if (title === t('landingPage.mostPopular') && products.length < 5) {
+          return [];
+        }
+
+        if (
+          title === t('landingPage.topExperiencesIn', { value: city }) ||
+          title === t('landingPage.mostPopular')
+        ) {
           products = products.toSorted((a, b) => b.reviews.totalReviews - a.reviews.totalReviews);
         }
 
-        return (
+        return [
           <ExperienceSection
             {...sections[index].configuration}
             key={index}
@@ -123,23 +128,19 @@ const Experiences = () => {
             title={title}
           >
             {products?.map((product: any) => {
-              const fromPrice = product.pricing.summary.fromPrice;
-              const priceWithDiscount = product.pricing.summary.fromPriceBeforeDiscount;
               const experience = getExperienceFromProduct(product, t);
 
               return (
                 <Link
                   key={product.productCode}
-                  href={`${NAVIGATION_ROUTES.product}${product.productCode}?price=${fromPrice}${
-                    priceWithDiscount ? `&discount=${priceWithDiscount}` : ''
-                  }`}
+                  href={`${NAVIGATION_ROUTES.product}${product.productCode}`}
                 >
                   <ExperienceCard key={experience.title} {...experience} />
                 </Link>
               );
             })}
-          </ExperienceSection>
-        );
+          </ExperienceSection>,
+        ];
       })}
       <ExperienceSection destinationName={city} title={t('landingPage.discoverAll')}>
         {EXPERIENCE_CATEGORIES.map((category) => (

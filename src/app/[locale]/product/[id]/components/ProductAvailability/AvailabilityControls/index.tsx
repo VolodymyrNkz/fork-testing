@@ -1,11 +1,7 @@
 'use client';
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { API_ROUTES, getDefaultHeaders } from '@/app/_constants/api';
 import { AvailabilityData } from '@/app/_components/InputDateSelect';
-import {
-  ProductAvailabilityResponse,
-  ProductBookableItemSchedule,
-} from '@/app/api/getProductAvailability/[productCode]/types';
+import { ProductBookableItemSchedule } from '@/app/api/getProductAvailability/[productCode]/types';
 import { BottomSheet } from '@/app/_components/BottomSheet';
 import { DatePicker } from '@/app/_components/DatePicker';
 import { CustomInput } from '@/app/_components/CustomInput';
@@ -19,7 +15,7 @@ import { styles } from '@/app/[locale]/product/[id]/components/ProductAvailabili
 import { useSearch } from '@/app/_contexts/searchContext';
 import { PersonIcon } from '@/app/_icons/PersonIcon';
 import { Guests, useBooking } from '@/app/_contexts/bookingContext';
-import { formatGuestsString } from '@/app/[locale]/product/[id]/service';
+import { fetchProductAvailability, formatGuestsString } from '@/app/[locale]/product/[id]/service';
 import { AgeBand, BookingRequirements } from '@/app/api/getSingleProduct/[productCode]/types';
 import { useFloating } from '@/app/_hooks/useFloating';
 import { scroller } from 'react-scroll';
@@ -27,7 +23,7 @@ import { checkIsBooked } from '@/app/_helpers/checkIsDateBooked';
 import { useLocale, useTranslations } from 'next-intl';
 import { ONE_DAY } from '@/app/_constants/common';
 import { useModal } from '@/app/_contexts/modalContext';
-import { useRequest } from '@/app/_hooks/useRequest';
+import { getUserInfo } from '@/app/_helpers/getUserInfo';
 
 export type ProductAvailabilityInfo = BookingRequirements & {
   ageBands?: AgeBand[];
@@ -47,7 +43,8 @@ export const AvailabilityControls: FC<AvailabilityControlsProps> = ({
 }) => {
   const t = useTranslations();
   const locale = useLocale();
-  const createRequest = useRequest();
+
+  const { currency } = getUserInfo();
 
   const [availabilityData, setAvailabilityData] = useState<AvailabilityData | undefined>(undefined);
   const [selectedDate, setSelectedDate] = useState<[Date, Date | null] | null>(null);
@@ -55,6 +52,7 @@ export const AvailabilityControls: FC<AvailabilityControlsProps> = ({
   const [isWizardOpen, setIsWizardOpen] = useState(false);
   const buttonRef = useRef<HTMLDivElement | null>(null);
   const [buttonLabel, setButtonLabel] = useState<string>(t('buttons.checkAvailability'));
+  const [calledManually, setCalledManually] = useState(false);
 
   const lastRequestState = useRef<{ travelDate: Date | null; guests: Guests | null }>({
     travelDate: null,
@@ -120,6 +118,7 @@ export const AvailabilityControls: FC<AvailabilityControlsProps> = ({
   };
 
   const handleCheckAvailability = async () => {
+    setCalledManually(true);
     if (!travelDate) {
       scroller.scrollTo('availabilityControls', {
         duration: 800,
@@ -148,6 +147,12 @@ export const AvailabilityControls: FC<AvailabilityControlsProps> = ({
       return;
     }
   };
+
+  useEffect(() => {
+    if (showTimeslots) {
+      getProductBookableItems(productCode);
+    }
+  }, [currency, productCode, showTimeslots]);
 
   function getAvailabilityRanges(data: ProductBookableItemSchedule[]) {
     const daysOfWeekMap: Record<string, number> = {
@@ -226,12 +231,8 @@ export const AvailabilityControls: FC<AvailabilityControlsProps> = ({
     return availabilityRanges;
   }
 
-  const fetchProductAvailability = async (productCode: string) => {
-    const data = await createRequest<ProductAvailabilityResponse>({
-      endpoint: `${API_ROUTES.getProductAvailability}/${productCode}`,
-      headers: getDefaultHeaders(),
-      method: 'GET',
-    });
+  const proceedProductAvailability = async (productCode: string) => {
+    const data = await fetchProductAvailability(productCode);
 
     const unavailableDates = Array.from(
       new Set(
@@ -260,10 +261,10 @@ export const AvailabilityControls: FC<AvailabilityControlsProps> = ({
 
   useEffect(() => {
     (async () => {
-      const availabilityData = await fetchProductAvailability(productCode);
+      const availabilityData = await proceedProductAvailability(productCode);
       setAvailabilityData(availabilityData);
     })();
-  }, [productCode]);
+  }, [productCode, currency]);
 
   useEffect(() => {
     if (filters?.startDate) {
@@ -335,10 +336,11 @@ export const AvailabilityControls: FC<AvailabilityControlsProps> = ({
   }, [setTargetRef]);
 
   useEffect(() => {
-    if (!loading) {
+    if (!loading && calledManually) {
+      setCalledManually(false);
       scrollToTimeslots();
     }
-  }, [loading]);
+  }, [loading, calledManually]);
 
   return (
     <>

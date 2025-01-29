@@ -4,7 +4,7 @@ export const styles = {
   open: 'opacity-100 pointer-events-auto',
   closed: 'opacity-0 pointer-events-none',
   sheet:
-    'w-full bg-white rounded-t-lg shadow-lg transform transition-transform duration-300 max-h-[90vh]',
+    'w-full bg-white rounded-t-lg shadow-lg transform transition-transform duration-300 max-h-[90dvh]',
   sheetOpen: 'translate-y-0',
   sheetClosed: 'translate-y-full',
   header: 'p-lg flex justify-between items-center cursor-pointer',

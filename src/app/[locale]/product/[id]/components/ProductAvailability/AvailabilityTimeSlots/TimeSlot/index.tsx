@@ -19,6 +19,7 @@ import { formatTimeToString } from '@/app/_helpers/formatDateRange';
 import { scroller } from 'react-scroll';
 import { useFormatter, useLocale, useTranslations } from 'next-intl';
 import { getUserInfo } from '@/app/_helpers/getUserInfo';
+import { formatPrice } from '@/app/_helpers/formatPrice';
 
 interface TimeSlotProps {
   productCode: string;
@@ -223,24 +224,21 @@ export const TimeSlot: FC<TimeSlotProps> = ({
                         count: numberOfTravelers,
                       })}{' '}
                       x{' '}
-                      {format.number(
-                        subtotalPrice.price.recommendedRetailPrice / numberOfTravelers,
-                        {
-                          style: 'currency',
-                          currency,
-                          currencyDisplay: 'narrowSymbol',
-                        },
-                      )}
+                      {formatPrice({
+                        price: subtotalPrice.price.recommendedRetailPrice / numberOfTravelers,
+                        currency,
+                        format,
+                      })}
                     </>
                   )}
                 </div>
               ))}
           </div>
           <div className={styles.totalPrice}>
-            {format.number(totalPrice || 0, {
-              style: 'currency',
+            {formatPrice({
+              price: totalPrice || 0,
               currency,
-              currencyDisplay: 'narrowSymbol',
+              format,
             })}
           </div>
         </div>

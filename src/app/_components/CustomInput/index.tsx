@@ -97,6 +97,11 @@ export const CustomInput: FC<CustomInputProps> = ({
             type={type || 'text'}
             name={name}
             value={value}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') {
+                e.currentTarget.blur();
+              }
+            }}
             onChange={handleInputChange}
             readOnly={readonly}
             onFocus={handleFocus}

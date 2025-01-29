@@ -43,7 +43,7 @@ export const BottomSheet: FC<BottomSheetProps> = ({
         onClick={toggle}
       >
         <div
-          className={`${styles.sheet} ${fullHeight ? 'h-full' : ''} ${isOpen ? styles.sheetOpen : styles.sheetClosed}`}
+          className={`${styles.sheet} ${fullHeight ? 'h-[100dvh]' : ''} ${isOpen ? styles.sheetOpen : styles.sheetClosed}`}
           onClick={(e) => e.stopPropagation()}
         >
           <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>

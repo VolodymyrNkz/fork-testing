@@ -20,12 +20,8 @@ import { ProductMeetingAndPickup } from '@/app/[locale]/product/[id]/components/
 
 interface ProductPageProps {
   params: { id: string };
-  searchParams: { price: string; discount?: string };
 }
-const ProductPage: FC<ProductPageProps> = async ({
-  params: { id: productCode },
-  searchParams: { price, discount },
-}) => {
+const ProductPage: FC<ProductPageProps> = async ({ params: { id: productCode } }) => {
   const [productData, productDescription] = await Promise.all([
     fetchProductData(productCode),
     getProductDescription(productCode),
@@ -37,11 +33,7 @@ const ProductPage: FC<ProductPageProps> = async ({
     <ImageViewerProvider providerPhotos={providerPhotos} productCode={productCode}>
       <BookingContextProvider bookingNotAvailable={bookingNotAvailable}>
         <div className={styles.root}>
-          <ProductDescription
-            productCode={productCode}
-            price={price}
-            priceBeforeDiscount={discount}
-          />
+          <ProductDescription productCode={productCode} />
           <ProductAvailability productCode={productCode} />
           <ProductHints productCode={productCode} />
           <ProductOverview productCode={productCode} />

@@ -5,6 +5,7 @@ import { OrderInfo } from '@/app/[locale]/product/[id]/components/CheckoutSectio
 import { useFormatter, useTranslations } from 'next-intl';
 import { getUserInfo } from '@/app/_helpers/getUserInfo';
 import { CancellationStatus } from '@/app/[locale]/product/[id]/components/CheckoutSection/components/CheckoutSection';
+import { formatPrice } from '@/app/_helpers/formatPrice';
 
 interface OrderSummaryProps {
   email: string;
@@ -29,10 +30,10 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ title, cancellationStatus,
       <div className={styles.totalPriceSection}>
         <div>{t('totalPrice')}</div>
         <div className={styles.price}>
-          {format.number(productBookingData?.totalPrice || 0, {
-            style: 'currency',
+          {formatPrice({
+            price: productBookingData?.totalPrice || 0,
             currency,
-            currencyDisplay: 'narrowSymbol',
+            format,
           })}
         </div>
       </div>

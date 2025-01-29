@@ -3,6 +3,7 @@ import ArrowIcon from '@/app/_icons/ArrowIcon';
 import { styles } from '@/app/[locale]/product/[id]/components/CheckoutSection/components/PriceBreakdown/styles';
 import { useFormatter, useTranslations } from 'next-intl';
 import { getUserInfo } from '@/app/_helpers/getUserInfo';
+import { formatPrice } from '@/app/_helpers/formatPrice';
 
 export const PriceBreakdown = () => {
   const t = useTranslations('checkout');
@@ -16,10 +17,10 @@ export const PriceBreakdown = () => {
       <div>{t('priceBreakdown')}</div>
       <div className={styles.price}>
         <div>
-          {format.number(productBookingData?.totalPrice || 0, {
-            style: 'currency',
+          {formatPrice({
+            price: productBookingData?.totalPrice || 0,
             currency,
-            currencyDisplay: 'narrowSymbol',
+            format,
           })}
         </div>
         <ArrowIcon />

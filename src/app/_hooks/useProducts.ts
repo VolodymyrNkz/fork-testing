@@ -4,7 +4,7 @@ import { ProductsResponse } from '../_interfaces/product-response.interface';
 import { getDefaultHeaders } from '../_constants/api';
 import { useRequest } from '@/app/_hooks/useRequest';
 
-export const useProducts = (city: string, sections: any[]) => {
+export const useProducts = (city: string, sections: any[], currency: string) => {
   const [data, setData] = useState<ProductsResponse[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,7 +25,7 @@ export const useProducts = (city: string, sections: any[]) => {
       setData(res);
       setLoading(false);
     })();
-  }, [city, sections.length]);
+  }, [city, sections.length, currency]);
 
   return { data, loading };
 };
