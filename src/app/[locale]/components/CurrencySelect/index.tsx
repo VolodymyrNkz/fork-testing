@@ -33,6 +33,7 @@ export const CurrencySelect = () => {
     params.set('currency', value);
 
     router.replace(`?${params.toString()}`);
+    handleToggle();
   };
 
   useEffect(() => {

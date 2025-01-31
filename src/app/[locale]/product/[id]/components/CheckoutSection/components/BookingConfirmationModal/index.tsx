@@ -98,15 +98,16 @@ export const BookingConfirmationModal: FC<BookingConfirmationModalProps> = ({
         }
       });
 
-      const tagNamesString = tags
+      const tagNames = tags
         .filter((tag) => allTagIds.has(tag.tagId) && FILTERS_CATEGORIES_IDS.includes(tag.tagId))
-        .map((tag) => tag.allNamesByLocale['en'])
-        .join(', ');
+        .map((tag) => ({ item_name: tag.allNamesByLocale['en'] }));
 
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: GTM_EVENTS.bookingConfirmed,
-        category: tagNamesString,
+        ecommerce: {
+          items: tagNames,
+        },
       });
     }
   }, [productTags, isConfirmed, tags]);

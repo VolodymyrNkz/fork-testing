@@ -58,8 +58,8 @@ export const GuestSelect: FC<GuestSelectProps> = ({ bookingRequirements }) => {
               ageBand = 'ADULT',
               endAge,
               startAge,
-              minTravelersPerBooking = 0,
-              maxTravelersPerBooking = 0,
+              minTravelersPerBooking: minBandTravelers = 0,
+              maxTravelersPerBooking: maxBandTravelers = 0,
             }) => (
               <div key={ageBand} className={styles.selectItem}>
                 <div>
@@ -68,33 +68,33 @@ export const GuestSelect: FC<GuestSelectProps> = ({ bookingRequirements }) => {
                     {t('common.age')} {startAge}-{endAge})
                   </div>
                   <div className={styles.travelersTotal}>
-                    {t('common.minimum')}: {minTravelersPerBooking}, {t('common.maximum')}:{' '}
+                    {t('common.minimum')}: {minBandTravelers}, {t('common.maximum')}:{' '}
                     {maxTravelersPerBooking}
                   </div>
                 </div>
                 <div className={styles.picker}>
                   <button
                     className={`${styles.pickerButton} ${
-                      travelersCount[ageBand] > minTravelersPerBooking
+                      travelersCount[ageBand] > minBandTravelers
                         ? styles.pickerButtonActive
                         : styles.pickerButtonDisabled
                     }`}
-                    onClick={() => decreaseCount(ageBand, minTravelersPerBooking)}
-                    disabled={travelersCount[ageBand] <= minTravelersPerBooking}
+                    onClick={() => decreaseCount(ageBand, minBandTravelers)}
+                    disabled={travelersCount[ageBand] <= minBandTravelers}
                   >
                     <MinusIcon />
                   </button>
                   <div className={styles.count}>{travelersCount[ageBand]}</div>
                   <button
                     className={`${styles.pickerButton} ${
-                      travelersCount[ageBand] < maxTravelersPerBooking &&
+                      travelersCount[ageBand] < maxBandTravelers &&
                       totalTravelers < maxTravelersPerBooking
                         ? styles.pickerButtonActive
                         : styles.pickerButtonDisabled
                     }`}
-                    onClick={() => increaseCount(ageBand, maxTravelersPerBooking)}
+                    onClick={() => increaseCount(ageBand, maxBandTravelers)}
                     disabled={
-                      travelersCount[ageBand] >= maxTravelersPerBooking ||
+                      travelersCount[ageBand] >= maxBandTravelers ||
                       totalTravelers >= maxTravelersPerBooking
                     }
                   >
@@ -111,7 +111,7 @@ export const GuestSelect: FC<GuestSelectProps> = ({ bookingRequirements }) => {
         )}
         {requiresAdultForBooking &&
           !Object.entries(travelersCount).some(
-            ([ageBand, count]) => ['ADULT', 'SENIOR'].includes(ageBand) && count > 0,
+            ([ageBand, count]) => ['ADULT', 'SENIOR', 'TRAVELER'].includes(ageBand) && count > 0,
           ) && <div className={styles.adultRequired}>{t('fallbacks.oneAdultRequired')}</div>}
       </div>
     </div>

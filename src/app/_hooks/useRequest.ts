@@ -10,6 +10,8 @@ interface RequestOptions<T> {
 
 const TIMEOUT = 120 * 1000;
 
+const skipModalRoutes = [API_ROUTES.getReviews, API_ROUTES.bookProduct];
+
 export function useRequest() {
   const { openModal } = useModal();
 
@@ -48,7 +50,7 @@ export function useRequest() {
     clearTimeout(timeoutId);
 
     if (!response.ok) {
-      if (endpoint !== API_ROUTES.getReviews) {
+      if (!skipModalRoutes.includes(endpoint)) {
         openModal('somethingWentWrong');
       }
       throw new Error(`Error: ${response.status} - ${response.statusText}`);

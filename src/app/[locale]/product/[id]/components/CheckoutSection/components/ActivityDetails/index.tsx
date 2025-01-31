@@ -21,6 +21,7 @@ import { getLocationProviderReferenceLink } from '@/app/[locale]/product/[id]/ut
 import { LocationBulkResponse } from '@/app/_interfaces/product-response.interface';
 import { MappedLanguageGuides } from '@/app/[locale]/product/[id]/service';
 import { useRequest } from '@/app/_hooks/useRequest';
+import { fetchGooglePlaceDetails } from '@/app/_services/fetchGooglePlace';
 
 const QUESTION_PLACEHOLDERS_OVERRIDES = [
   'TRANSFER_AIR_DEPARTURE_AIRLINE',
@@ -29,6 +30,8 @@ const QUESTION_PLACEHOLDERS_OVERRIDES = [
   'TRANSFER_RAIL_DEPARTURE_STATION',
   'TRANSFER_PORT_CRUISE_SHIP',
   'SPECIAL_REQUIREMENTS',
+  'FULL_NAMES_FIRST1',
+  'FULL_NAMES_LAST1',
 ];
 
 const DEPARTURE_MODE_QUESTIONS: Record<DepartureType, string[]> = {
@@ -144,42 +147,56 @@ export const ActivityDetails: FC<ActivityDetailsProps> = ({
         return;
       }
       const locations =
-        travelerPickup?.locations?.length > 500
-          ? travelerPickup?.locations?.slice(0, 500)
-          : travelerPickup?.locations;
+        travelerPickup.locations.length > 500
+          ? travelerPickup.locations.slice(0, 500)
+          : travelerPickup.locations;
 
       try {
         setLocationsLoading(true);
         const data = await getLocations(locations);
-        let linkNumber = 0;
-        const formattedData = data.locations?.map((item) => {
-          if (item.provider === 'GOOGLE') {
-            linkNumber++;
-          }
 
-          return {
-            label: (
-              <div className="text-text">
-                <p className="truncate">
-                  {item.provider === 'GOOGLE'
-                    ? t('checkout.pickupPointIndex', { index: linkNumber })
-                    : item.name}
-                </p>
-                <p className="truncate text-textSecondary">
-                  {item.provider === 'GOOGLE' ? '' : item?.address?.street}
-                </p>
-              </div>
-            ),
-            value: item.reference,
-            ...(item.provider === 'GOOGLE'
-              ? { link: getLocationProviderReferenceLink(item as LocationBulkResponse) }
-              : {}),
-            transferMode: getTransferMode(
-              locations.find((location) => location.location.ref === item.reference)?.pickupType ||
-                'OTHER',
-            ),
-          };
-        });
+        const formattedData = await Promise.all(
+          data.locations.map(async (item) => {
+            if (item.provider === 'GOOGLE') {
+              const googleData = await fetchGooglePlaceDetails(item.providerReference);
+
+              return {
+                label: (
+                  <div className="text-text">
+                    <p className="truncate">{googleData?.displayName.text || ''}</p>
+                    <Link
+                      className={styles.meetPointLink}
+                      target="_blank"
+                      href={getLocationProviderReferenceLink(item as LocationBulkResponse)}
+                    >
+                      {googleData?.formattedAddress}
+                    </Link>
+                  </div>
+                ),
+                value: item.reference,
+                transferMode: getTransferMode(
+                  locations.find((location) => location.location.ref === item.reference)
+                    ?.pickupType || 'OTHER',
+                ),
+              };
+            }
+
+            return {
+              label: (
+                <div className="text-text">
+                  <p className="truncate">{item.name}</p>
+                  <p className="truncate text-textSecondary">{item?.address?.street}</p>
+                </div>
+              ),
+              value: item.reference,
+              transferMode: getTransferMode(
+                locations.find((location) => location.location.ref === item.reference)
+                  ?.pickupType || 'OTHER',
+              ),
+            };
+          }),
+        );
+
         setPickupLocations(formattedData);
       } catch (e) {
         console.error(e);
@@ -203,17 +220,33 @@ export const ActivityDetails: FC<ActivityDetailsProps> = ({
   const isMeetAtStartPoint = travelerPickup?.pickupOptionType === 'MEET_EVERYONE_AT_START_POINT';
 
   const getArrivalRadioSelected = () => {
+    if (formState['PICKUP_POINT_FREE_TEXT']?.value) {
+      return 1;
+    }
+
     if (
-      arrivalMode === 'OTHER' &&
+      formState['TRANSFER_ARRIVAL_MODE']?.value === 'OTHER' &&
+      formState['PICKUP_POINT']?.value === 'OTHER'
+    ) {
+      return travelerPickup?.allowCustomTravelerPickup ? 2 : 1;
+    }
+
+    if (
+      formState['TRANSFER_ARRIVAL_MODE']?.value === 'OTHER' &&
       formState['PICKUP_POINT']?.value === 'MEET_AT_DEPARTURE_POINT' &&
       !pickupIncluded
     ) {
-      return 2;
-    } else if (
-      (arrivalMode === 'OTHER' &&
+      return travelerPickup?.allowCustomTravelerPickup ? 2 : 1;
+    }
+
+    if (
+      (formState['TRANSFER_ARRIVAL_MODE']?.value === 'OTHER' &&
+        !travelerPickup?.allowCustomTravelerPickup &&
         formState['PICKUP_POINT']?.value &&
         formState['PICKUP_POINT']?.value !== 'OTHER') ||
-      (arrivalMode === 'OTHER' && formState['PICKUP_POINT']?.value === 'OTHER')
+      (formState['TRANSFER_ARRIVAL_MODE']?.value === 'OTHER' &&
+        formState['PICKUP_POINT']?.value === 'OTHER' &&
+        !travelerPickup?.allowCustomTravelerPickup)
     ) {
       return 1;
     } else {
@@ -228,7 +261,7 @@ export const ActivityDetails: FC<ActivityDetailsProps> = ({
   };
 
   const getDepartureRadioSelected = () => {
-    return departureMode === 'OTHER' ? 1 : 0;
+    return formState['TRANSFER_DEPARTURE_MODE']?.value === 'OTHER' ? 1 : 0;
   };
 
   const getInputType = (type: string) => {
@@ -432,45 +465,48 @@ export const ActivityDetails: FC<ActivityDetailsProps> = ({
   }, [travelerQuestions]);
 
   useEffect(() => {
-    (async () => {
+    const fetchLocations = async () => {
       const startPointsRefs = startPoint?.map((item) => item.location.ref);
 
-      if (startPointsRefs) {
-        const data = await createRequest<LocationsBulkResponse, LocationsBulkBody>({
-          endpoint: 'locationsBulk',
-          body: {
-            locations: startPointsRefs,
-          },
-        });
+      if (!startPointsRefs) return;
 
-        let linkIndex = 0;
+      const data = await createRequest<LocationsBulkResponse, LocationsBulkBody>({
+        endpoint: 'locationsBulk',
+        body: {
+          locations: startPointsRefs,
+        },
+      });
 
-        const locations = data.locations.map((location, _, self) => {
-          const isGoogle = location.provider === 'GOOGLE';
-          if (isGoogle) {
-            linkIndex++;
+      const locations = await Promise.all(
+        data.locations.map(async (location) => {
+          if (location.provider === 'GOOGLE') {
+            const googleData = await fetchGooglePlaceDetails(location.providerReference);
+
+            return {
+              title: googleData?.displayName?.text || '',
+              subtitle: googleData?.formattedAddress || '',
+              link: getLocationProviderReferenceLink(location as LocationBulkResponse),
+              ref: location.reference,
+            };
           }
+
           return {
-            title: isGoogle
-              ? t('checkout.meetingPointIndex', { index: self.length > 1 ? linkIndex : '' })
-              : location.name,
-            subtitle: isGoogle
-              ? t('checkout.seeOnGoogle')
-              : `${location.address?.street}, ${location.address?.country}`,
-            link: isGoogle
-              ? getLocationProviderReferenceLink(location as LocationBulkResponse)
-              : '',
+            title: location.name,
+            subtitle: `${location.address?.street}, ${location.address?.country}`,
+            link: '',
             ref: location.reference,
           };
-        });
+        }),
+      );
 
-        setStartPointLocation(locations);
-      }
-    })();
+      setStartPointLocation(locations);
+    };
+
+    fetchLocations();
   }, [startPoint]);
 
   useEffect(() => {
-    if (languageGuides) {
+    if (languageGuides && !!Object.values(languageGuides).length) {
       bookingQuestionsFormHandler.setValidator('languageGuide', VALIDATORS.required);
     }
   }, [languageGuides]);
@@ -666,6 +702,7 @@ export const ActivityDetails: FC<ActivityDetailsProps> = ({
                         if (formState[item.id]?.value === 'OTHER') {
                           if (pickupLocations.length === 1) {
                             updateField('PICKUP_POINT', pickupLocations[0].value);
+                            updateField('PICKUP_POINT_FREE_TEXT', undefined);
                             setArrivalMode(pickupLocations[0].transferMode);
                           } else {
                             updateField(item.id, undefined);
@@ -709,6 +746,27 @@ export const ActivityDetails: FC<ActivityDetailsProps> = ({
                         </>
                       ),
                     },
+                    ...(travelerPickup?.allowCustomTravelerPickup
+                      ? [
+                          {
+                            title: t('checkout.dontSeeLocation'),
+                            onClick: () => {
+                              setArrivalMode('OTHER');
+                              updateField('PICKUP_POINT', undefined);
+                              updateField('PICKUP_POINT_FREE_TEXT', 'true');
+                            },
+                            items: (
+                              <CustomInput
+                                required
+                                invalid={!formState[item.id]?.value && formState[item.id]?.touched}
+                                value={formState['PICKUP_POINT']?.value}
+                                onChange={(value) => updateField('PICKUP_POINT', value)}
+                                placeholder={t('inputs.yourPickupLocation')}
+                              />
+                            ),
+                          },
+                        ]
+                      : []),
                     ...(isMeetAtDeparturePoint
                       ? [
                           {
@@ -716,6 +774,7 @@ export const ActivityDetails: FC<ActivityDetailsProps> = ({
                             onClick: () => {
                               setArrivalMode('OTHER');
                               updateField(item.id, 'MEET_AT_DEPARTURE_POINT');
+                              updateField('PICKUP_POINT_FREE_TEXT', undefined);
                             },
                             items:
                               startPointLocation.length === 1 ? (
@@ -768,6 +827,7 @@ export const ActivityDetails: FC<ActivityDetailsProps> = ({
                             onClick: () => {
                               setArrivalMode('OTHER');
                               updateField(item.id, 'OTHER');
+                              updateField('PICKUP_POINT_FREE_TEXT', undefined);
                             },
                           },
                         ]

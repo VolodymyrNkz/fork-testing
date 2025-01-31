@@ -201,9 +201,6 @@
     "meetingAndPickup": "Meeting and Pickup",
     "activityEnds": "This activity ends back at the meeting point.",
     "totalReviews": "Total review count and overall rating based on Viator and Tripadvisor reviews",
-    "meetingPointDefaultName": "Meeting point",
-    "pickupPointDefaultName": "Pickup point",
-    "endPointDefaultName": "End point",
     "ticketPointDefaultName": "Ticket Redemption Point"
   },
   "filterPanel": {
@@ -242,6 +239,7 @@
     "totalExperiences": "{count} experiences"
   },
   "checkout": {
+    "dontSeeLocation": "I don't see my pickup location",
     "aboutOperator": "Details about the <b>experience operator</b>",
     "contactDetails": "Contact details",
     "activityDetails": "Activity details",
@@ -271,7 +269,6 @@
     "tourLanguage": "Tour language",
     "specialRequirements": "Special requirements",
     "selectTourLanguage": "Select tour language",
-    "seeOnGoogle": "View on Google maps",
     "pickupPointIndex": "Pickup point {index}",
     "meetingPointIndex": "Meeting point {index}",
     "payWith": "Pay with",
@@ -290,7 +287,9 @@
       "TRANSFER_RAIL_DEPARTURE_LINE": "Departure rail line",
       "TRANSFER_RAIL_DEPARTURE_STATION": "Departure rail station",
       "TRANSFER_PORT_CRUISE_SHIP": "Cruise ship",
-      "SPECIAL_REQUIREMENTS": "e.g dietary needs, accessibility"
+      "SPECIAL_REQUIREMENTS": "e.g dietary needs, accessibility",
+      "FULL_NAMES_FIRST1": "Lead Traveler First Name",
+      "FULL_NAMES_LAST1": "Lead Traveler Last Name"
     },
     "emailWarning": "We'll use this email to send you confirmation and updates about your booking",
     "agreementText": "By clicking 'Book Now', you agree to Viator’s <terms>Customer Terms of Use</terms> and <privacy>Privacy Statement</privacy>, and you also agree to enter into a direct contract with the supplier of the experience as described on the <listing>listing page.</listing>",
@@ -373,9 +372,12 @@
     "somethingWentWrong": "Something went wrong",
     "somethingWentWrongText": "<div>Something went wrong and we couldn't load this content.</div> <div>Please reload and try again</div>",
     "notBookable": "Experience <br></br> is not supported",
-    "notBookableText": "<div>We’re very sorry, but this experience isn’t supported by TheFork.</div> <br></br> <div>Find something else to enjoy by exploring other available experiences.</div>"
+    "notBookableText": "<div>We’re very sorry, but this experience isn’t supported by TheFork.</div> <br></br> <div>Find something else to enjoy by exploring other available experiences.</div>",
+    "unexpectedBookingError": "Unexpected booking error",
+    "unexpectedBookingErrorText": "<div>We’re very sorry, seems unexpected error has happened.</div> <br></br> <div>Please, retry you booking attempt.</div>"
   },
   "inputs": {
+    "yourPickupLocation": "Your pickup location",
     "placeOrActivity": "Place or activity",
     "searchResult": "Search result",
     "searchFor": "Search for",
@@ -418,7 +420,8 @@
     "seeExperiences": "See {count, plural, one {# experience} other {# experiences}}",
     "seeSteps": "See {count, plural, one {# more step} other {# more steps}}",
     "seeOtherPhotos": "See other {count, plural, one {# photo} other {# photos}}",
-    "exploreOther": "Explore other experience"
+    "exploreOther": "Explore other experience",
+    "retryBooking": "Retry booking"
   },
   "faq": {
     "title": "Frequently Asked Questions",

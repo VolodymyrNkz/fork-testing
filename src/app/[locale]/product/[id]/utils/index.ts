@@ -1,17 +1,26 @@
 import { LocationBulkResponse } from '@/app/_interfaces/product-response.interface';
+import { fetchGooglePlaceDetails } from '@/app/_services/fetchGooglePlace';
 
 export const getLocationProviderReferenceLink = (location: LocationBulkResponse) => {
   if (location.provider === 'GOOGLE') {
-    return `https://www.google.com/maps/place/?q=place_id:${location.providerReference}`;
+    return `https://www.google.com/maps/search/?api=1&query=mock&query_place_id=${location.providerReference}`;
   }
 
   // TODO: handle more providers
   return '';
 };
 
-export const getLocationProviderReferenceName = (location: LocationBulkResponse) => {
+export const getLocationProviderReferenceInfo = async (location: LocationBulkResponse) => {
   if (location.provider === 'GOOGLE') {
-    return 'seeOnGoogle';
+    try {
+      const googleData = await fetchGooglePlaceDetails(location.providerReference);
+      return {
+        address: googleData?.formattedAddress || '',
+        name: googleData?.displayName.text || '',
+      };
+    } catch (error) {
+      console.error('Failed to fetch Google Place details:', error);
+    }
   }
 
   // TODO: handle more providers

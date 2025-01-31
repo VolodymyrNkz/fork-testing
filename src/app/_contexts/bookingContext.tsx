@@ -5,6 +5,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import { AgeBandType, RequestCodeStatus } from '@/app/api/types';
@@ -254,13 +255,15 @@ export const BookingContextProvider = ({
   const [productTitle, setProductTitle] = useState<string>('');
   const [productTags, setProductTags] = useState<number[]>([]);
   const [sessionToken, setSessionToken] = useState('');
-  const [cartRef, setCartRef] = useState<string>('');
-  const [bookingRef, setBookingRef] = useState<string>('');
   const [payment, setPayment] = useState<null | PaymentType>(null);
   const [bookingStatus, setBookingStatus] = useState<BookingStatusData | null>(null);
   const [productBookLoading, setProductBookLoading] = useState(false);
   const [pickupLocationReference, setPickupLocationReference] = useState<string>('');
   const [shouldCloseCheckout, setShouldCloseCheckout] = useState(false);
+
+  const cartRef = useRef('');
+  const bookingRef = useRef('');
+  const hasBookingError = useRef(false);
   const [lastHeldCurrency, setLastHeldCurrency] = useState<string | null>(null);
 
   const { openModal } = useModal();
@@ -478,8 +481,8 @@ export const BookingContextProvider = ({
     }
 
     setSessionToken(data.paymentSessionToken);
-    setCartRef(data.cartRef);
-    setBookingRef(data.items[0].bookingRef);
+    cartRef.current = data.cartRef;
+    bookingRef.current = data.items?.[0].bookingRef;
     setLastHeldCurrency(data.currency);
 
     const expiresAt = data?.items?.[0]?.bookingHoldInfo?.pricing?.validUntil;
@@ -582,10 +585,13 @@ export const BookingContextProvider = ({
     };
 
     const processedKeys = new Set<string>();
+    const freeTextKey = 'PICKUP_POINT_FREE_TEXT';
+    const languageGuideKey = 'languageGuide';
+    const hasPickupPointFreeText = Boolean(values?.[freeTextKey]);
 
     return Object.entries(values)
       .filter(([key]) => {
-        if (key === 'languageGuide') {
+        if ([languageGuideKey, freeTextKey].includes(key)) {
           return false;
         }
         if (key.includes('-unit')) {
@@ -607,17 +613,21 @@ export const BookingContextProvider = ({
           };
         } else if (!processedKeys.has(key)) {
           const [question, travelerNum] = removeDigits(key);
-          const unitDefault =
-            question === 'WEIGHT'
-              ? 'kg'
-              : question === 'HEIGHT'
-                ? 'cm'
-                : ['PICKUP_POINT'].includes(question)
-                  ? 'LOCATION_REFERENCE'
-                  : ['TRANSFER_DEPARTURE_PICKUP', 'TRANSFER_ARRIVAL_DROP_OFF'].includes(question)
-                    ? 'FREETEXT'
-                    : undefined;
-
+          const unitDefault = (() => {
+            switch (question) {
+              case 'WEIGHT':
+                return 'kg';
+              case 'HEIGHT':
+                return 'cm';
+              case 'PICKUP_POINT':
+                return hasPickupPointFreeText ? 'FREETEXT' : 'LOCATION_REFERENCE';
+              case 'TRANSFER_DEPARTURE_PICKUP':
+              case 'TRANSFER_ARRIVAL_DROP_OFF':
+                return 'FREETEXT';
+              default:
+                return undefined;
+            }
+          })();
           return {
             question,
             answer,
@@ -630,40 +640,72 @@ export const BookingContextProvider = ({
   };
 
   const bookProduct = async (body: ProductBookBody) => {
-    const data = await createRequest<ProductBookResponse, ProductBookBody>({
-      endpoint: 'bookProduct',
-      body,
-    });
+    let data:
+      | ProductBookResponse
+      | (BookingStatusData & { rejectionReasonCode?: RejectionReasonCode })
+      | undefined;
 
-    if (data.items) {
-      const isConfirmed = data.items[0].status === 'CONFIRMED';
+    if (partnerRef && hasBookingError.current) {
+      hasBookingError.current = false;
+
+      try {
+        data = await createRequest<BookingStatusData, { partnerBookingRef: string }>({
+          endpoint: API_ROUTES.getBookingStatus,
+          body: { partnerBookingRef: partnerRef },
+        });
+
+        const { status, currency } = data;
+
+        if (status === 'CONFIRMED') {
+          setBookingStatus({ status, currency });
+
+          return setProductBookLoading(false);
+        }
+      } catch {} // TODO: check if we should fail if status checking fails
+    }
+
+    try {
+      data = await createRequest<ProductBookResponse, ProductBookBody>({
+        endpoint: API_ROUTES.bookProduct,
+        body,
+      });
+    } catch {
+      hasBookingError.current = true;
+      setProductBookLoading(false);
+
+      return void openModal('unexpectedBookingError', () => {
+        setProductBookLoading(true);
+        bookProduct(body);
+      });
+    }
+
+    if (data && 'items' in data) {
+      const { status, rejectionReasonCode: reason } = data.items[0];
+      const currency = data.currency;
+
+      const isConfirmed = status === 'CONFIRMED';
 
       if (!isConfirmed && productBookingData) {
         proceedBooking(productBookingData, true);
       }
 
-      setBookingStatus(
-        isConfirmed
-          ? {
-              reason: data.items[0]?.rejectionReasonCode,
-              status: data.items[0].status,
-              currency: data.currency,
-            }
-          : {
-              reason: data.items[0]?.rejectionReasonCode,
-              status: data.items[0].status,
-            },
-      );
+      setBookingStatus(isConfirmed ? { reason, status, currency } : { reason, status });
     } else {
       openModal('somethingWentWrong', () => setShouldCloseCheckout(true));
     }
+
     setProductBookLoading(false);
   };
 
   const submitSucceeded = useCallback(
     async (msg: { paymentToken: string }) => {
       const body: ProductBookBody = {
-        cartRef: cartRef,
+        cartRef: cartRef.current,
+        additionalBookingDetails: {
+          fraudPreventionDetails: {
+            voucherDeliveryType: 'EMAIL_TO_CUSTOMER',
+          },
+        },
         paymentToken: msg.paymentToken,
         bookerInfo: {
           firstName: contactDetailsFormHandler.formValues.firstName,
@@ -675,7 +717,7 @@ export const BookingContextProvider = ({
         },
         items: [
           {
-            bookingRef,
+            bookingRef: bookingRef.current,
             ...(bookingQuestionsFormHandler.formValues.languageGuide
               ? {
                   languageGuide: {
@@ -697,8 +739,6 @@ export const BookingContextProvider = ({
     },
     [
       bookingQuestionsFormHandler.formValues,
-      bookingRef,
-      cartRef,
       contactDetailsFormHandler.formValues.countryCode,
       contactDetailsFormHandler.formValues.email,
       contactDetailsFormHandler.formValues.firstName,

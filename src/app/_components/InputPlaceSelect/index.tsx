@@ -42,6 +42,7 @@ export const InputPlaceSelect: FC<InputPlaceSelectProps> = () => {
     setSearchInputValue,
   } = useSearch();
   const searchParams = useSearchParams();
+
   const { getTransformedResponse } = useTransformResponse();
   const createRequest = useRequest();
 
@@ -148,6 +149,10 @@ export const InputPlaceSelect: FC<InputPlaceSelectProps> = () => {
 
     handleToggle();
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, [userCurrency]);
 
   return (
     <BottomSheet

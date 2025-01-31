@@ -109,10 +109,10 @@ const Experiences = () => {
     <div className="mx-lg my-11 me-5 space-y-10 overflow-hidden">
       {data?.flatMap(({ products, title }, index) => {
         // TODO: check if API actually sends localized title, may not work with other languages, relying on order is WA
+
         if (title === t('landingPage.mostPopular') && products.length < 5) {
           return [];
         }
-
         if (
           title === t('landingPage.topExperiencesIn', { value: city }) ||
           title === t('landingPage.mostPopular')
@@ -124,6 +124,7 @@ const Experiences = () => {
           <ExperienceSection
             {...sections[index].configuration}
             key={index}
+            id={index + 1}
             destinationName={city}
             title={title}
           >
@@ -142,7 +143,11 @@ const Experiences = () => {
           </ExperienceSection>,
         ];
       })}
-      <ExperienceSection destinationName={city} title={t('landingPage.discoverAll')}>
+      <ExperienceSection
+        id={data.length + 1}
+        destinationName={city}
+        title={t('landingPage.discoverAll')}
+      >
         {EXPERIENCE_CATEGORIES.map((category) => (
           <ExperienceCategory destinationName={city} key={category.name} {...category} />
         ))}

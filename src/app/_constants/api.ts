@@ -2,6 +2,7 @@ import { DEFAULT_LANGUAGE } from '@/app/_constants/common';
 import { getCookie } from '@/app/_helpers/getCookie';
 
 export const VIATOR_API_URL = 'https://api.sandbox.viator.com/partner/';
+export const GOOGLE_PLACES_API_URL = 'https://places.googleapis.com/v1/places/';
 
 export type AcceptLanguage =
   | 'en' // English
@@ -48,4 +49,7 @@ export const API_ROUTES = {
   locations: 'locations',
   getProductAvailability: 'getProductAvailability',
   getProductTimeslots: 'getProductTimeslots',
+  bookProduct: 'bookProduct',
+  getBookingStatus: 'getBookingStatus',
+  googlePlaces: 'googlePlaces',
 };

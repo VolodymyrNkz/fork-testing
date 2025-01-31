@@ -47,7 +47,6 @@ export const ProductMeetingAndPickup = ({ product }: ProductMeetingAndPickupProp
             title={t('productPage.pickupPoint')}
             locations={pickupLocations}
             icon={<MapPinIcon />}
-            itemDefaultName={t('productPage.pickupPointDefaultName')}
           >
             {!!pickupDetails && (
               <>
@@ -67,7 +66,6 @@ export const ProductMeetingAndPickup = ({ product }: ProductMeetingAndPickupProp
             title={t('productPage.meetingPoint')}
             locations={startLocations}
             icon={<MapPinIcon />}
-            itemDefaultName={t('productPage.meetingPointDefaultName')}
           />
         )}
         {!!endLocations?.length && (
@@ -75,7 +73,6 @@ export const ProductMeetingAndPickup = ({ product }: ProductMeetingAndPickupProp
             title={t('productPage.endPoint')}
             locations={endLocations}
             icon={<LocationIcon />}
-            itemDefaultName={t('productPage.endPointDefaultName')}
           />
         )}
       </div>

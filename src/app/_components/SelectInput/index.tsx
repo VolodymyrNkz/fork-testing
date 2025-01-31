@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef, FC, ReactNode } from 'react';
 import ArrowIcon from '@/app/_icons/ArrowIcon';
 import { styles } from '@/app/_components/SelectInput/styles';
-import Link from 'next/link';
-import { useTranslations } from 'next-intl';
 
 interface DropdownOption<T> {
   value: T;
@@ -35,7 +33,6 @@ export const SelectInput: FC<DropdownSelectProps<any>> = ({
   listWidth,
   required,
 }) => {
-  const t = useTranslations();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<DropdownOption<any> | null>(null);
 
@@ -101,13 +98,6 @@ export const SelectInput: FC<DropdownSelectProps<any>> = ({
           {selectedOption ? (
             renderValue ? (
               renderValue(selectedOption)
-            ) : selectedOption.link ? (
-              <div>
-                <div>{selectedOption.label}</div>
-                <Link className={styles.link} href={selectedOption.link} target="_blank">
-                  {t('checkout.seeOnGoogle')}
-                </Link>
-              </div>
             ) : (
               selectedOption.label
             )
@@ -149,16 +139,7 @@ export const SelectInput: FC<DropdownSelectProps<any>> = ({
               key={option.value}
               onClick={() => handleSelectValue(option)}
             >
-              {option.link ? (
-                <div>
-                  <div>{option.label}</div>
-                  <Link className={styles.link} href={option.link} target="_blank">
-                    {t('checkout.seeOnGoogle')}
-                  </Link>
-                </div>
-              ) : (
-                option.label
-              )}
+              {option.label}
             </div>
           ))}
         </div>

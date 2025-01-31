@@ -10,6 +10,7 @@ import { DollarIcon } from '@/app/_icons/DollarIcon';
 import { useFormatter, useLocale, useTranslations } from 'next-intl';
 import { getUserInfo } from '@/app/_helpers/getUserInfo';
 import { formatPrice } from '@/app/_helpers/formatPrice';
+import { GTM_IDS } from '@/app/_constants/gtm';
 
 type ExperienceCardProps = Experience & {
   full?: boolean;
@@ -35,7 +36,7 @@ const ExperienceCard: FC<ExperienceCardProps> = ({
 
   return (
     <div className={`mr-6 ${full ? 'w-full' : 'w-[288px]'} flex-shrink-0 snap-start`}>
-      <div className={styles.card}>
+      <div className={styles.card} id={GTM_IDS.card}>
         <Image
           draggable="false"
           width={288}

@@ -201,9 +201,6 @@
     "meetingAndPickup": "Incontro e prelievo",
     "activityEnds": "Questa attività termina al punto di incontro.",
     "totalReviews": "Conteggio totale delle recensioni e valutazione generale basata sulle recensioni di Viator e Tripadvisor",
-    "meetingPointDefaultName": "Punto di incontro",
-    "pickupPointDefaultName": "Punto di ritiro",
-    "endPointDefaultName": "Punto finale",
     "ticketPointDefaultName": "Punto di ritiro dei biglietti"
   },
   "filterPanel": {
@@ -242,6 +239,7 @@
     "totalExperiences": "{count} esperienze"
   },
   "checkout": {
+    "dontSeeLocation": "Non vedo il mio luogo di ritiro",
     "aboutOperator": "Dettagli sull' <b>operatore dell'esperienza</b>",
     "contactDetails": "Dettagli di contatto",
     "activityDetails": "Dettagli dell'attività",
@@ -271,7 +269,6 @@
     "tourLanguage": "Lingua del tour",
     "specialRequirements": "Requisiti speciali",
     "selectTourLanguage": "Seleziona la lingua del tour",
-    "seeOnGoogle": "Visualizza su Google Maps",
     "pickupPointIndex": "Punto di prelievo {index}",
     "meetingPointIndex": "Punto di incontro {index}",
     "payWith": "Paga con",
@@ -285,6 +282,8 @@
       "OTHER": "Altro"
     },
     "questionPlaceholders": {
+      "FULL_NAMES_FIRST1": "Nome del viaggiatore principale",
+      "FULL_NAMES_LAST1": "Cognome del viaggiatore principale",
       "TRANSFER_AIR_DEPARTURE_AIRLINE": "Compagnia aerea di partenza",
       "TRANSFER_DEPARTURE_PICKUP": "Punto di prelievo",
       "TRANSFER_RAIL_DEPARTURE_LINE": "Linea ferroviaria di partenza",
@@ -373,9 +372,12 @@
     "somethingWentWrong": "Qualcosa è andato storto",
     "somethingWentWrongText": "<div>Qualcosa è andato storto e non siamo riusciti a caricare questo contenuto.</div> <div>Ricarica la pagina e riprova</div>",
     "notBookable": "L'esperienza <br></br> non è supportata",
-    "notBookableText": "<div>Ci dispiace molto, ma questa esperienza non è supportata da TheFork.</div> <br></br> <div>Trova qualcos'altro da goderti esplorando altre esperienze disponibili.</div>"
+    "notBookableText": "<div>Ci dispiace molto, ma questa esperienza non è supportata da TheFork.</div> <br></br> <div>Trova qualcos'altro da goderti esplorando altre esperienze disponibili.</div>",
+    "unexpectedBookingError": "Errore di prenotazione inaspettato",
+    "unexpectedBookingErrorText": "<div>Ci scusiamo molto, sembra che si sia verificato un errore inaspettato.</div> <br></br> <div>Si prega di riprovare il tentativo di prenotazione.</div>"
   },
   "inputs": {
+    "yourPickupLocation": "Il tuo luogo di ritiro",
     "placeOrActivity": "Luogo o attività",
     "searchResult": "Risultato della ricerca",
     "searchFor": "Cerca",
@@ -418,7 +420,8 @@
     "seeExperiences": "Vedi {count, plural, one {# esperienza} other {# esperienze}}",
     "seeSteps": "Vedi {count, plural, one {# altro passaggio} other {# altri passaggi}}",
     "seeOtherPhotos": "Vedi altre {count, plural, one {# foto} other {# foto}}",
-    "exploreOther": "Esplora altre esperienze"
+    "exploreOther": "Esplora altre esperienze",
+    "retryBooking": "Riprovare la prenotazione"
   },
   "faq": {
     "title": "Domande frequenti",

@@ -3,6 +3,7 @@ import React, { FC, useRef } from 'react';
 import { useSearch } from '@/app/_contexts/searchContext';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/routing';
+import { GTM_IDS } from '@/app/_constants/gtm';
 
 const styles = {
   section: 'mb-8',
@@ -13,6 +14,7 @@ const styles = {
 
 interface ExperienceSectionProps {
   title: string;
+  id: number;
   children: React.ReactNode;
   tagId?: number;
   destinationName: string;
@@ -27,6 +29,7 @@ const ExperienceSection: FC<ExperienceSectionProps> = ({
   destinationName,
   rating,
   flags,
+  id,
 }) => {
   const t = useTranslations('buttons');
   const { handleSetFilters, handleSetDestinationFilter } = useSearch();
@@ -79,10 +82,11 @@ const ExperienceSection: FC<ExperienceSectionProps> = ({
 
   return (
     <div className={styles.section}>
-      <div className={styles.sliderContainer}>
+      <div className={styles.sliderContainer} id={GTM_IDS.shelfId(id)}>
         <div className="mb-4 flex items-center justify-between">
           <h2 className={styles.sectionTitle}>{title}</h2>
           <p
+            id={GTM_IDS.seeAll}
             className="cursor-pointer pr-4 font-bold text-primary transition-colors duration-200 hover:text-gray-500"
             onClick={handleSeeAll}
           >

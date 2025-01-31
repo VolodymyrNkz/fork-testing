@@ -41,6 +41,11 @@ export const ModalMessages = {
     text: 'notBookableText',
     button: 'exploreOther',
   },
+  unexpectedBookingError: {
+    title: 'unexpectedBookingError',
+    text: 'unexpectedBookingErrorText',
+    button: 'retryBooking',
+  },
 };
 
 export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {

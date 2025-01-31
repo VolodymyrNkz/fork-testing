@@ -50,15 +50,24 @@ interface BookingRequestItem {
   bookingQuestionAnswers: BookingQuestionAnswer[];
 }
 
+interface AdditionalBookingDetails {
+  fraudPreventionDetails: FraudPreventionDetails;
+}
+
+interface FraudPreventionDetails {
+  voucherDeliveryType: 'EMAIL_TO_CUSTOMER';
+}
+
 export interface ProductBookBody {
   cartRef: string;
   bookerInfo: BookerInfo;
   communication: Communication;
   items: BookingRequestItem[];
   paymentToken: string;
+  additionalBookingDetails: AdditionalBookingDetails;
 }
 
-interface ProductBookItem {
+export interface ProductBookItem {
   partnerBookingRef: string;
   bookingRef: string;
 }

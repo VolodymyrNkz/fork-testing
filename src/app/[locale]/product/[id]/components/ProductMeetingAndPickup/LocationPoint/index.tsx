@@ -1,41 +1,56 @@
-import React, { FC, PropsWithChildren, useState } from 'react';
+import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
 import { styles } from './styles';
 import type { LocationPoint as Location } from '../../../_hooks/useProductLocations';
 import { DropdownSearchInput } from '@/app/_components/DropdownSearchInput';
 import {
   getLocationProviderReferenceLink,
-  getLocationProviderReferenceName,
+  getLocationProviderReferenceInfo,
   highlightMatchingText,
 } from '../../../utils';
 import { cn } from '@/app/_helpers/tw';
 import { LocationBulkResponse } from '@/app/_interfaces/product-response.interface';
 import { useBooking } from '@/app/_contexts/bookingContext';
-import { useTranslations } from 'next-intl';
 
 interface Props {
   icon?: React.ReactNode;
   locations: Location[];
   title: string;
-  itemDefaultName?: string;
+}
+
+interface ReferenceInfo {
+  name: string;
+  address: string;
 }
 
 export const ProviderReferenceLink: FC<{ location: LocationBulkResponse; className?: string }> = ({
   location,
   className,
 }) => {
-  const t = useTranslations('checkout');
-
+  const [referenceInfo, setReferenceInfo] = useState<ReferenceInfo>({ name: '', address: '' });
   const link = getLocationProviderReferenceLink(location);
-  const name = getLocationProviderReferenceName(location);
 
-  if (!link || !name) {
+  useEffect(() => {
+    const fetchName = async () => {
+      const referenceInfo = await getLocationProviderReferenceInfo(location);
+      if (referenceInfo) {
+        setReferenceInfo({ address: referenceInfo?.address, name: referenceInfo?.name });
+      }
+    };
+
+    fetchName();
+  }, [location]);
+
+  if (!link || !referenceInfo) {
     return null;
   }
 
   return (
-    <a href={link} target="_blank" rel="noreferrer" className={className}>
-      {t(name)}
-    </a>
+    <>
+      <p>{referenceInfo.name}</p>
+      <a href={link} target="_blank" rel="noreferrer" className={className}>
+        {referenceInfo.address}
+      </a>
+    </>
   );
 };
 
@@ -46,7 +61,6 @@ export const LocationPoint: React.FC<PropsWithChildren<Props>> = ({
   locations,
   icon,
   children,
-  itemDefaultName,
 }) => {
   const { handleSetPickupLocationReference } = useBooking();
 
@@ -56,8 +70,8 @@ export const LocationPoint: React.FC<PropsWithChildren<Props>> = ({
 
   const reference = selectedLocation?.reference || '';
 
-  const options = locations.map((location, index) => ({
-    label: location.name || `${itemDefaultName} ${index + 1}`,
+  const options = locations.map((location) => ({
+    label: location.name || '',
     value: location.reference,
     ...location,
   }));

@@ -201,9 +201,6 @@
     "meetingAndPickup": "Reunión y recogida",
     "activityEnds": "Esta actividad termina en el punto de encuentro.",
     "totalReviews": "Recuento total de opiniones y calificación general basado en opiniones de Viator y Tripadvisor",
-    "meetingPointDefaultName": "Punto de encuentro",
-    "pickupPointDefaultName": "Punto de recogida",
-    "endPointDefaultName": "Punto final",
     "ticketPointDefaultName": "Punto de canje de boletos"
   },
   "filterPanel": {
@@ -242,6 +239,7 @@
     "totalExperiences": "{count} experiencias"
   },
   "checkout": {
+    "dontSeeLocation": "No veo mi lugar de recogida",
     "aboutOperator": "Detalles sobre el <b>operador de la experiencia</b>",
     "contactDetails": "Detalles de contacto",
     "activityDetails": "Detalles de la actividad",
@@ -271,7 +269,6 @@
     "tourLanguage": "Idioma del tour",
     "specialRequirements": "Requisitos especiales",
     "selectTourLanguage": "Selecciona el idioma del tour",
-    "seeOnGoogle": "Ver en Google Maps",
     "pickupPointIndex": "Punto de recogida {index}",
     "meetingPointIndex": "Punto de encuentro {index}",
     "payWith": "Pagar con",
@@ -285,6 +282,8 @@
       "OTHER": "Otro"
     },
     "questionPlaceholders": {
+      "FULL_NAMES_FIRST1": "Nombre del viajero principal",
+      "FULL_NAMES_LAST1": "Apellido del viajero principal",
       "TRANSFER_AIR_DEPARTURE_AIRLINE": "Aerolínea de salida",
       "TRANSFER_DEPARTURE_PICKUP": "Punto de recogida",
       "TRANSFER_RAIL_DEPARTURE_LINE": "Línea de tren de salida",
@@ -373,9 +372,12 @@
     "somethingWentWrong": "Algo salió mal",
     "somethingWentWrongText": "<div>Algo salió mal y no pudimos cargar este contenido.</div> <div>Por favor, recarga e inténtalo de nuevo</div>",
     "notBookable": "La experiencia <br></br> no es compatible",
-    "notBookableText": "<div>Lo sentimos mucho, pero esta experiencia no es compatible con TheFork.</div> <br></br> <div>Encuentra algo más para disfrutar explorando otras experiencias disponibles.</div>"
+    "notBookableText": "<div>Lo sentimos mucho, pero esta experiencia no es compatible con TheFork.</div> <br></br> <div>Encuentra algo más para disfrutar explorando otras experiencias disponibles.</div>",
+    "unexpectedBookingError": "Error de reserva inesperado",
+    "unexpectedBookingErrorText": "<div>Lo sentimos mucho, parece que ha ocurrido un error inesperado.</div> <br></br> <div>Por favor, intente reservar de nuevo.</div>"
   },
   "inputs": {
+    "yourPickupLocation": "Tu lugar de recogida",
     "placeOrActivity": "Lugar o actividad",
     "searchResult": "Resultado de búsqueda",
     "searchFor": "Buscar",
@@ -418,7 +420,8 @@
     "seeExperiences": "Ver {count, plural, one {# experiencia} other {# experiencias}}",
     "seeSteps": "Ver {count, plural, one {# paso más} other {# pasos más}}",
     "seeOtherPhotos": "Ver otras {count, plural, one {# foto} other {# fotos}}",
-    "exploreOther": "Explora otras experiencias"
+    "exploreOther": "Explora otras experiencias",
+    "retryBooking": "Reintentar reserva"
   },
   "faq": {
     "title": "Preguntas frecuentes",
